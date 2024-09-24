@@ -1,4 +1,4 @@
-import { _decorator, CCFloat, Component, EventKeyboard, Input, input, KeyCode, lerp, Node,Animation, RigidBody, Vec3 } from 'cc';
+import { _decorator, CCFloat, Component, EventKeyboard, Input, input, KeyCode, lerp, Node,Animation, RigidBody, Vec3, Quat } from 'cc';
 const { ccclass, property } = _decorator;
 
 //Import component local
@@ -28,9 +28,15 @@ export class PlayerMovementController extends Component {
     private currentClip:string;
     private isFacingRight:boolean;
 
+    private rotationSpeed: number = 600; // Rotation speed in degrees per second
+    private currentRotation: Vec3 = new Vec3(); // Player's current rotation
+    private keysPressed: { [key: number]: boolean } = {}; // Track keys pressed
+
     onLoad() {
         input.on(Input.EventType.KEY_DOWN,this.movement,this);
         input.on(Input.EventType.KEY_UP,this.releaseMovement,this);
+        input.on(Input.EventType.KEY_DOWN, this.onKeyDown, this);
+        input.on(Input.EventType.KEY_UP, this.onKeyUp, this);
     
         this.xRotation=0;
         this.zRotation=0;
@@ -59,7 +65,7 @@ export class PlayerMovementController extends Component {
             this.rb.setLinearVelocity(new Vec3 (lerp(0,this.xSpeed,this.speed*deltaTime),
                                                     this.rb.linearFactor.y,
                                                 lerp(0,this.zSpeed,this.speed*deltaTime)));
-            console.log(lerp(0,this.xSpeed,this.speed*deltaTime));
+            // console.log(lerp(0,this.xSpeed,this.speed*deltaTime));
             
             if(this.zSpeed<0){
                 this.playAnimation("forward");
@@ -81,6 +87,62 @@ export class PlayerMovementController extends Component {
 
         //Check lagi bergerak di-z atau ga
         this.checkIsMovingZDimension();
+
+        // Test
+        // this.rb.setAngularVelocity(new Vec3(0,3,0));
+
+        this.node.getRotation().getEulerAngles(this.currentRotation);
+
+        // Determine the desired rotation based on the keys pressed
+        let desiredRotation: Vec3 | null = null;
+        
+        if (this.keysPressed[KeyCode.KEY_W] && this.keysPressed[KeyCode.KEY_A]) {
+            // Rotate up-left (45 degrees)
+            desiredRotation = new Vec3(0, 315, 0);
+        } else if (this.keysPressed[KeyCode.KEY_W] && this.keysPressed[KeyCode.KEY_D]) {
+            // Rotate up-right (45 degrees)
+            desiredRotation = new Vec3(0, 45, 0);
+        } else if (this.keysPressed[KeyCode.KEY_S] && this.keysPressed[KeyCode.KEY_A]) {
+            // Rotate down-left
+            desiredRotation = new Vec3(0, 225, 0);
+        } else if (this.keysPressed[KeyCode.KEY_S] && this.keysPressed[KeyCode.KEY_D]) {
+            // Rotate down-right
+            desiredRotation = new Vec3(0, 135, 0);
+        } else if (this.keysPressed[KeyCode.KEY_W]) {
+            // Rotate up
+            desiredRotation = new Vec3(0, 90, 0);
+        } else if (this.keysPressed[KeyCode.KEY_S]) {
+            // Rotate down
+            desiredRotation = new Vec3(0, 270, 0);
+        } else if (this.keysPressed[KeyCode.KEY_A]) {
+            // Rotate left
+            desiredRotation = new Vec3(0, 180, 0);
+        } else if (this.keysPressed[KeyCode.KEY_D]) {
+            // Rotate right
+            desiredRotation = new Vec3(0, 0, 0);
+        }
+
+        // If a desired rotation is set, smoothly rotate towards it
+       if (desiredRotation) {
+            this.rotateInstantly(desiredRotation);
+        }
+        
+        
+    }
+
+    private rotateInstantly(targetRotation: Vec3) {
+        // Set the player's rotation instantly
+        this.node.setRotationFromEuler(targetRotation.x, targetRotation.y, targetRotation.z);
+    }
+
+     onKeyDown(event: EventKeyboard) {
+        // Mark the key as pressed
+        this.keysPressed[event.keyCode] = true;
+    }
+
+    onKeyUp(event: EventKeyboard) {
+        // Mark the key as released
+        this.keysPressed[event.keyCode] = false;
     }
 
     movement(event: EventKeyboard){
