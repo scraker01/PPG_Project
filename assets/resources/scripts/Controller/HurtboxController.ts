@@ -1,9 +1,11 @@
-import { _decorator, BoxCollider, CapsuleCollider, Collider, CollisionEventType, Component, EColliderType, ICollisionEvent, Node, RigidBody } from 'cc';
+import { _decorator, CapsuleCollider, Component, ICollisionEvent, ITriggerEvent, Node, RigidBody } from 'cc';
 const { ccclass, property } = _decorator;
 
 @ccclass('HurtboxController')
 export class HurtboxController extends Component {
+
     private collider: CapsuleCollider;
+
     private rb: RigidBody;
 
     start() {
@@ -13,8 +15,9 @@ export class HurtboxController extends Component {
         this.rb.useCCD = true;
 
         this.collider.on('onCollisionEnter',this.onCollisionEnter,this);
+        this.collider.on('onTriggerEnter', this.onTriggerEnter, this);
         this.collider.addMask(1);
-    
+        
     }
 
    onCollisionEnter(event: ICollisionEvent) {
@@ -23,11 +26,9 @@ export class HurtboxController extends Component {
         // Handle collision response
     }
 
-    
-    
-
-    update(deltaTime: number) {
-        
+    private onTriggerEnter(event: ITriggerEvent) {
+        console.log('Trigger Enter:', event.type, event);
+        // Logic for when something enters the trigger zone
     }
 }
 

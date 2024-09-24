@@ -27,6 +27,7 @@ export class PlayerMovementController extends Component {
     private objectAnimation:Animation;
     private currentClip:string;
     private isFacingRight:boolean;
+    private scale;
 
     private rotationSpeed: number = 600; // Rotation speed in degrees per second
     private currentRotation: Vec3 = new Vec3(); // Player's current rotation
@@ -55,6 +56,8 @@ export class PlayerMovementController extends Component {
         this.objectAnimation = this.getComponent(Animation);
 
         this.currentClip = this.objectAnimation.defaultClip.toString();
+        this.scale = this.node.getScale();
+
     }
 
     update(deltaTime: number) {
@@ -104,19 +107,44 @@ export class PlayerMovementController extends Component {
             desiredRotation = new Vec3(0, 45, 0);
         } else if (this.keysPressed[KeyCode.KEY_S] && this.keysPressed[KeyCode.KEY_A]) {
             // Rotate down-left
-            desiredRotation = new Vec3(0, 225, 0);
+            desiredRotation = new Vec3(0, 45, 0);
         } else if (this.keysPressed[KeyCode.KEY_S] && this.keysPressed[KeyCode.KEY_D]) {
             // Rotate down-right
-            desiredRotation = new Vec3(0, 135, 0);
+            desiredRotation = new Vec3(0, 315, 0);
+
+        /////////////////////////////////////////////////////////////////////////////////////////
         } else if (this.keysPressed[KeyCode.KEY_W]) {
             // Rotate up
-            desiredRotation = new Vec3(0, 90, 0);
+            if(!this.checkKeysPressed){
+                this.node.setScale(Math.abs(this.scale.x), this.scale.y,this.scale.z);
+                
+            }
+            
+            //Temp fix 
+            if(this.node.scale.x>0){
+                desiredRotation = new Vec3(0, 90, 0);
+            }else{
+                desiredRotation = new Vec3(0, 270, 0);
+
+            }
         } else if (this.keysPressed[KeyCode.KEY_S]) {
             // Rotate down
-            desiredRotation = new Vec3(0, 270, 0);
+            // desiredRotation = new Vec3(0, 270, 0);
+            if(!this.checkKeysPressed){
+                this.node.setScale(Math.abs(this.scale.x), this.scale.y,this.scale.z);
+                
+            }
+
+            //Temp Fix
+            if(this.node.scale.x>0){
+                desiredRotation = new Vec3(0, 270, 0);
+            }else{
+                desiredRotation = new Vec3(0, 90, 0);
+
+            }
         } else if (this.keysPressed[KeyCode.KEY_A]) {
             // Rotate left
-            desiredRotation = new Vec3(0, 180, 0);
+            desiredRotation = new Vec3(0, 0, 0);
         } else if (this.keysPressed[KeyCode.KEY_D]) {
             // Rotate right
             desiredRotation = new Vec3(0, 0, 0);
@@ -127,7 +155,14 @@ export class PlayerMovementController extends Component {
             this.rotateInstantly(desiredRotation);
         }
         
-        
+        console.log(this.keysPressed)
+    }
+
+    private checkKeysPressed():boolean{
+        if(this.keysPressed[KeyCode.KEY_A]||this.keysPressed[KeyCode.KEY_D]){
+            return true;
+        }
+        return false;
     }
 
     private rotateInstantly(targetRotation: Vec3) {
@@ -135,7 +170,7 @@ export class PlayerMovementController extends Component {
         this.node.setRotationFromEuler(targetRotation.x, targetRotation.y, targetRotation.z);
     }
 
-     onKeyDown(event: EventKeyboard) {
+    onKeyDown(event: EventKeyboard) {
         // Mark the key as pressed
         this.keysPressed[event.keyCode] = true;
     }
@@ -161,9 +196,11 @@ export class PlayerMovementController extends Component {
                 break;
             case KeyCode.KEY_W:
                 this.isMovingForward = true;
+
                 break;
             case KeyCode.KEY_S:
                 this.isMovingBackward = true;
+
                 break;
         }
     }
@@ -231,9 +268,11 @@ export class PlayerMovementController extends Component {
         }
     }
 
+    //By Rotation / Angle 
     flip(){
-        let scale = this.node.getScale();
-        this.node.setScale(scale.x*-1, scale.y,scale.z);
+        this.scale = this.node.getScale();
+        // let rotation = this.node.getRotation();
+        this.node.setScale(this.scale.x*-1, this.scale.y,this.scale.z);
         
         this.isFacingRight = !this.isFacingRight;
     }

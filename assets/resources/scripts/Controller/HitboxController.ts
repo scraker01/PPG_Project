@@ -14,34 +14,13 @@ export class HitboxController extends Component {
 
         
         input.on(Input.EventType.KEY_DOWN,this.keydown,this);
-        // this.collider.on();
-        this.node.active=false;
 
-        this.collider.addMask(2);
-        this.collider.on('onTriggerEnter', this.onTriggerEnter, this);
-        // this.collider.on('onTriggerStay', this.onTriggerStay, this);
-        // this.collider.on('onTriggerExit', this.onTriggerExit, this);    
+        this.node.active=false;
     }
 
     update(deltaTime: number) {
 
     }
-
-    private onTriggerEnter(event: ITriggerEvent) {
-        console.log('Trigger Enter:', event.type, event);
-        // Logic for when something enters the trigger zone
-    }
-
-    // private onTriggerStay(event: ITriggerEvent) {
-    //     console.log('Trigger Stay:', event.type, event);
-    //     // Logic for when something stays in the trigger zone
-    // }
-
-    // private onTriggerExit(event: ITriggerEvent) {
-    //     console.log('Trigger Exit:', event.type, event);
-    //     // Logic for when something exits the trigger zone
-    // }
-    
 
     // Testing
     keydown(event: EventKeyboard){
