@@ -54,6 +54,7 @@ export class PlayerMovementController extends Component {
     protected start(): void {
         this.rb = this.node.getComponent(RigidBody);
         this.objectAnimation = this.getComponent(Animation);
+        this.rb.useCCD = true;
 
         this.currentClip = this.objectAnimation.defaultClip.toString();
         this.scale = this.node.getScale();
@@ -132,7 +133,6 @@ export class PlayerMovementController extends Component {
             // desiredRotation = new Vec3(0, 270, 0);
             if(!this.checkKeysPressed){
                 this.node.setScale(Math.abs(this.scale.x), this.scale.y,this.scale.z);
-                
             }
 
             //Temp Fix
@@ -155,7 +155,7 @@ export class PlayerMovementController extends Component {
             this.rotateInstantly(desiredRotation);
         }
         
-        console.log(this.keysPressed)
+        // console.log(this.keysPressed)
     }
 
     private checkKeysPressed():boolean{

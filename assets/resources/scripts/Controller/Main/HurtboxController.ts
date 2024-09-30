@@ -1,9 +1,11 @@
 import { _decorator, CapsuleCollider, Component, ICollisionEvent, ITriggerEvent, Node, RigidBody } from 'cc';
+import { EnemyController } from './EnemyController';
+import { PlayerMovementController } from './PlayerMovementController';
 const { ccclass, property } = _decorator;
 
 @ccclass('HurtboxController')
 export class HurtboxController extends Component {
-
+    @property({type:EnemyController}) private entityCon:EnemyController;
     private collider: CapsuleCollider;
 
     private rb: RigidBody;
@@ -17,6 +19,8 @@ export class HurtboxController extends Component {
         this.collider.on('onCollisionEnter',this.onCollisionEnter,this);
         this.collider.on('onTriggerEnter', this.onTriggerEnter, this);
         this.collider.addMask(1);
+
+        
         
     }
 
@@ -27,7 +31,16 @@ export class HurtboxController extends Component {
     }
 
     private onTriggerEnter(event: ITriggerEvent) {
-        console.log('Trigger Enter:', event.type, event);
+        // const otherNode = event.otherCollider.node;
+        const selfNode = event.selfCollider.node;
+
+        // console.log('Trigger Enter:', event.type, otherNode.name);
+        console.log('Trigger Enter:', event.type, selfNode.name);
+
+        if(selfNode.name==="enemy-dummy"){
+            selfNode.getComponent(EnemyController).changeMesh();
+        }
+        
         // Logic for when something enters the trigger zone
     }
 }

@@ -18,10 +18,6 @@ export class HitboxController extends Component {
         this.node.active=false;
     }
 
-    update(deltaTime: number) {
-
-    }
-
     // Testing
     keydown(event: EventKeyboard){
         switch(event.keyCode){
@@ -31,7 +27,7 @@ export class HitboxController extends Component {
                     if(this.node.active){
                         this.node.active= false;
                     }
-                },0.5);
+                },0.25);
                 break;
         }
     }
