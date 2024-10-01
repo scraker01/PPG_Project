@@ -1,6 +1,7 @@
 import { _decorator, CapsuleCollider, Component, ICollisionEvent, ITriggerEvent, Node, RigidBody } from 'cc';
 import { EnemyController } from './EnemyController';
-import { PlayerMovementController } from './PlayerMovementController';
+import { Gate } from './Puzzle-Key/Gate';
+import { teleporter } from '../Etc/teleporter';
 const { ccclass, property } = _decorator;
 
 @ccclass('HurtboxController')
@@ -31,15 +32,30 @@ export class HurtboxController extends Component {
     }
 
     private onTriggerEnter(event: ITriggerEvent) {
-        // const otherNode = event.otherCollider.node;
+        const otherNode = event.otherCollider.node;
         const selfNode = event.selfCollider.node;
 
         // console.log('Trigger Enter:', event.type, otherNode.name);
-        console.log('Trigger Enter:', event.type, selfNode.name);
+        console.log('Trigger Enter SelfNode:', event.type, selfNode.name);
+        console.log('Trigger Enter OtherNode:', event.type, otherNode.name);
 
-        if(selfNode.name==="enemy-dummy"){
+        //Musuh dipukul sama Player
+        if(selfNode.name==="enemy-dummy" && otherNode.name === "Player"){
             selfNode.getComponent(EnemyController).changeMesh();
         }
+
+        //Key Puzzle 
+        if(selfNode.name==="Player" && otherNode.name === "key1"){
+            otherNode.getParent().getParent().getChildByName("gate").getChildByName("gate1").getComponent(Gate).makeItDisappear();
+            // otherNode.getComponent(Gate).makeItDisappear();
+        }
+
+        //Gate (buat ke stage/scene selanjutnya) 
+        if(selfNode.name==="Player" && otherNode.name === "tp1"){
+            otherNode.getParent().getParent().getChildByName("tp").getChildByName("tp1").getComponent(teleporter).toOutro();
+            // otherNode.getComponent(Gate).makeItDisappear();
+        }
+
         
         // Logic for when something enters the trigger zone
     }
