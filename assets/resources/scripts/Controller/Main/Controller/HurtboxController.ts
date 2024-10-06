@@ -1,7 +1,7 @@
 import { _decorator, CapsuleCollider, Component, ICollisionEvent, ITriggerEvent, Node, RigidBody } from 'cc';
 import { EnemyController } from './EnemyController';
-import { Gate } from './Puzzle-Key/Gate';
-import { teleporter } from '../Etc/teleporter';
+import { Gate } from '../Puzzle-Key/Gate';
+import { teleporter } from '../../Etc/teleporter';
 const { ccclass, property } = _decorator;
 
 @ccclass('HurtboxController')
