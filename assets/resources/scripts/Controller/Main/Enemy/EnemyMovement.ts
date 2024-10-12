@@ -1,5 +1,7 @@
 import { _decorator, Component, lerp, Node, RigidBody, Vec3,PhysicsSystem, randomRangeInt, misc} from 'cc';
 const { ccclass, property } = _decorator;
+import { HitboxController } from '../Controller/HitboxController';
+import { EnemyController } from '../Controller/EnemyController';
 
 @ccclass('EnemyMovement')
 export class EnemyMovement extends Component {
@@ -10,11 +12,14 @@ export class EnemyMovement extends Component {
     private enemyPos:Vec3;
     private rb:RigidBody;
 
+    
+
     start() {
         this.player = this.node.getParent().getParent().getChildByName("Player");
         this.rb = this.getComponent(RigidBody);
         
         this.walkPointRange = 5;
+       
         // this.walkPointSet = true;
     }
     
@@ -31,14 +36,16 @@ export class EnemyMovement extends Component {
             playerPos.z - enemyPos.z
         );
 
+        let dist = new Vec3(direction.x,direction.y,direction.z);
+
         if(direction.length() > 1 && direction.length() < this.walkPointRange){
 
             //Normalisasi arah vektor
-            direction.normalize();
+            dist.normalize();
     
             // Bergerak ke arah player
             let moveSpeed = 1; // Set movement speed
-            let moveStep = direction.multiplyScalar(moveSpeed * deltaTime);
+            let moveStep = dist.multiplyScalar(moveSpeed * deltaTime);
             let newEnemyPos = enemyPos.add(moveStep);
     
 
@@ -49,10 +56,17 @@ export class EnemyMovement extends Component {
     
             // rotate enemy menghadap ke player
             // XZ digunakan untuk arah rotasinya
-            let angleToPlayer = Math.atan2(direction.x, direction.z); // angle dalam radians
+            let angleToPlayer = Math.atan2(dist.x, dist.z); // angle dalam radians
             this.node.setRotationFromEuler(0, misc.radiansToDegrees(angleToPlayer), 0);
-        }
+        } 
+        if(direction.length() <= 1){
+            
 
+            this.getComponent(EnemyController).attack();
+            
+            //Todo : implementasi 
+            
+        }
     }
 
     private checkDistToPlayer(playerPos, enemyPos){

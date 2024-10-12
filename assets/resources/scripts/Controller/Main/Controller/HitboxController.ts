@@ -10,10 +10,11 @@ export class HitboxController extends Component {
         // this.hitboxActive = this.node.active;
         this.collider = this.getComponent(BoxCollider);
         this.rb = this.getComponent(RigidBody);
-        this.rb.useCCD = true;
+        // this.rb.useCCD = true;
 
-        
-        input.on(Input.EventType.KEY_DOWN,this.keydown,this);
+        if(this.node.getParent().getParent().name==="Player"){
+            input.on(Input.EventType.KEY_DOWN,this.keydown,this);
+        }        
 
         this.node.active=false;
     }
@@ -22,14 +23,19 @@ export class HitboxController extends Component {
     keydown(event: EventKeyboard){
         switch(event.keyCode){
             case KeyCode.KEY_J:
-                this.node.active = true;
-                this.scheduleOnce(()=>{
-                    if(this.node.active){
-                        this.node.active= false;
-                    }
-                },0.25);
+                this.activateHitbox();
                 break;
         }
+    }
+
+    activateHitbox(){
+        this.node.active = true;
+        this.scheduleOnce(()=>{
+            
+            if(this.node.active){
+                this.node.active= false;
+            }
+        },0.5);
     }
 }
 
