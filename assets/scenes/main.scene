@@ -26,7 +26,7 @@
     "_active": true,
     "_components": [],
     "_prefab": {
-      "__id__": 228
+      "__id__": 230
     },
     "_lpos": {
       "__type__": "cc.Vec3",
@@ -57,7 +57,7 @@
     },
     "autoReleaseAssets": false,
     "_globals": {
-      "__id__": 229
+      "__id__": 231
     },
     "_id": "187bd34a-22a2-4d74-972c-896142f6a3e4"
   },
@@ -77,7 +77,7 @@
         "__id__": 6
       },
       {
-        "__id__": 225
+        "__id__": 227
       }
     ],
     "_active": true,
@@ -126,6 +126,9 @@
       },
       {
         "__id__": 223
+      },
+      {
+        "__id__": 225
       }
     ],
     "_active": true,
@@ -835,7 +838,7 @@
     "propertyPath": [
       "_name"
     ],
-    "value": "enemy-dummy-001"
+    "value": "enemy-dummy"
   },
   {
     "__type__": "cc.TargetInfo",
@@ -1052,7 +1055,7 @@
     "propertyPath": [
       "_name"
     ],
-    "value": "enemy-dummy-002"
+    "value": "enemy-dummy"
   },
   {
     "__type__": "cc.TargetInfo",
@@ -4149,7 +4152,7 @@
       "__id__": 159
     },
     "_children": [],
-    "_active": true,
+    "_active": false,
     "_components": [
       {
         "__id__": 161
@@ -6015,6 +6018,63 @@
   },
   {
     "__type__": "cc.Node",
+    "_name": "LevelStats",
+    "_objFlags": 0,
+    "__editorExtras__": {},
+    "_parent": {
+      "__id__": 3
+    },
+    "_children": [],
+    "_active": true,
+    "_components": [
+      {
+        "__id__": 226
+      }
+    ],
+    "_prefab": null,
+    "_lpos": {
+      "__type__": "cc.Vec3",
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "_lrot": {
+      "__type__": "cc.Quat",
+      "x": 0,
+      "y": 0,
+      "z": 0,
+      "w": 1
+    },
+    "_lscale": {
+      "__type__": "cc.Vec3",
+      "x": 1,
+      "y": 1,
+      "z": 1
+    },
+    "_mobility": 0,
+    "_layer": 1073741824,
+    "_euler": {
+      "__type__": "cc.Vec3",
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "_id": "2dFq+j60xIEbTVWx3kxdAc"
+  },
+  {
+    "__type__": "36519Hyyp9N3piOkr5uLFWt",
+    "_name": "",
+    "_objFlags": 0,
+    "__editorExtras__": {},
+    "node": {
+      "__id__": 225
+    },
+    "_enabled": true,
+    "__prefab": null,
+    "_id": "77asQix8FDXam8jazaEjwd"
+  },
+  {
+    "__type__": "cc.Node",
     "_name": "Directional Light",
     "_objFlags": 0,
     "__editorExtras__": {},
@@ -6025,7 +6085,7 @@
     "_active": true,
     "_components": [
       {
-        "__id__": 226
+        "__id__": 228
       }
     ],
     "_prefab": null,
@@ -6064,7 +6124,7 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 225
+      "__id__": 227
     },
     "_enabled": true,
     "__prefab": null,
@@ -6078,7 +6138,7 @@
     "_useColorTemperature": false,
     "_colorTemperature": 6550,
     "_staticSettings": {
-      "__id__": 227
+      "__id__": 229
     },
     "_visibility": -325058561,
     "_illuminanceHDR": 30000,
@@ -6134,28 +6194,28 @@
   {
     "__type__": "cc.SceneGlobals",
     "ambient": {
-      "__id__": 230
-    },
-    "shadows": {
-      "__id__": 231
-    },
-    "_skybox": {
       "__id__": 232
     },
-    "fog": {
+    "shadows": {
       "__id__": 233
     },
-    "octree": {
+    "_skybox": {
       "__id__": 234
     },
-    "skin": {
+    "fog": {
       "__id__": 235
     },
-    "lightProbeInfo": {
+    "octree": {
       "__id__": 236
     },
-    "postSettings": {
+    "skin": {
       "__id__": 237
+    },
+    "lightProbeInfo": {
+      "__id__": 238
+    },
+    "postSettings": {
+      "__id__": 239
     },
     "bakedWithStationaryMainLight": false,
     "bakedWithHighpLightmap": false

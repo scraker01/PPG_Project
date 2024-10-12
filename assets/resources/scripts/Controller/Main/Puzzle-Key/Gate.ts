@@ -3,12 +3,19 @@ const { ccclass, property } = _decorator;
 
 @ccclass('Gate')
 export class Gate extends Component {
-    makeItDisappear(){
-        this.node.active = false;
+
+    private static gateNode:Node;
+
+    protected start(): void {
+        Gate.gateNode = this.node;
     }
 
-    makeItAppear(){
-        this.node.active = true;
+    static makeItDisappear(){
+        Gate.gateNode.active = false;
+    }
+
+    static makeItAppear(){
+        Gate.gateNode.active = true;
     }
 }
 

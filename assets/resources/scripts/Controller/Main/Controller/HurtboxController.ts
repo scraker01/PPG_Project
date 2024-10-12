@@ -12,6 +12,8 @@ export class HurtboxController extends Component {
 
     private rb: RigidBody;
 
+    
+
     start() {
         // this.hitboxActive = this.node.active;
         this.collider = this.getComponent(CapsuleCollider);
@@ -75,15 +77,22 @@ export class HurtboxController extends Component {
             // console.log("in trigger stats")
             if(stats != null){
                 let dmg = stats.getDamageStat();
-                stats.receiveDamage(dmg);
+
+
+                let isBeingHurt = stats.getHurtCondition();
+                if(!isBeingHurt){
+                    stats.receiveDamage(dmg);
+
+                    this.scheduleOnce(()=>{
+
+                        stats.deactivateHurtCondition();
+
+                    },stats.getHurtTimer());                    
+
+                }
             }
         }
 
-        //Key Puzzle 
-        if(selfNode.name==="Player" && otherNode.name === "key1"){
-            otherNode.getParent().getParent().getChildByName("gate").getChildByName("gate1").getComponent(Gate).makeItDisappear();
-            // otherNode.getComponent(Gate).makeItDisappear();
-        }
 
         //Gate (buat ke stage/scene selanjutnya) 
         if(selfNode.name==="Player" && otherNode.name === "tp1"){
