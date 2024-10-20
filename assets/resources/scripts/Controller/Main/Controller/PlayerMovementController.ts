@@ -1,4 +1,5 @@
 import { _decorator, CCFloat, Component, EventKeyboard, Input, input, KeyCode, lerp, Node,Animation, RigidBody, Vec3, Quat } from 'cc';
+import { AnimationController } from './AnimationController';
 const { ccclass, property } = _decorator;
 
 //Import component local
@@ -7,7 +8,9 @@ const { ccclass, property } = _decorator;
 @ccclass('PlayerMovementController')
 export class PlayerMovementController extends Component {
     @property({type: CCFloat}) private speed:number;
+    
     // @property({type:AnimationController}) private playerAnimation:AnimationController;
+
 
     //Movement Variables
     private xRotation: number;
@@ -24,8 +27,11 @@ export class PlayerMovementController extends Component {
 
 
     //Aninmation Variables
-    private objectAnimation:Animation;
-    private currentClip:string;
+    private playerSprite:Node;
+    private playerAnimation:AnimationController;
+    
+    
+    //Others
     private isFacingRight:boolean;
     private scale;
 
@@ -53,29 +59,36 @@ export class PlayerMovementController extends Component {
 
     protected start(): void {
         this.rb = this.node.getComponent(RigidBody);
-        this.objectAnimation = this.getComponent(Animation);
+        this.playerSprite = this.node.getParent().getChildByName("spriteHolder").getChildByName("playerSprite");
+        this.playerAnimation = this.playerSprite.getComponent(AnimationController);
+        
+        // this.objectAnimation = this.getComponent(Animation);
         this.rb.useCCD = true;
 
-        this.currentClip = this.objectAnimation.defaultClip.toString();
+        // this.currentClip = this.objectAnimation.defaultClip.toString();
         this.scale = this.node.getScale();
 
     }
 
     update(deltaTime: number) {
+        let nodeWorldPos = this.node.getWorldPosition();
+        this.playerSprite.setWorldPosition(nodeWorldPos);
+
+
         this.xSpeed = this.speed*this.xRotation;
         this.zSpeed = this.speed*this.zRotation;
 
-        if(this.checkIsMoving){
+        if(this.checkIsMoving()){
             this.rb.setLinearVelocity(new Vec3 (lerp(0,this.xSpeed,this.speed*deltaTime),
                                                     this.rb.linearFactor.y,
                                                 lerp(0,this.zSpeed,this.speed*deltaTime)));
             // console.log(lerp(0,this.xSpeed,this.speed*deltaTime));
             
             if(this.zSpeed<0){
-                this.playAnimation("forward");
+                this.playerAnimation.playAnimation("forward");
             }
             else if(Math.abs(this.xSpeed)>0 || this.zSpeed > 0){
-                this.playAnimation("sideways-walk"); 
+                this.playerAnimation.playAnimation("sideways-walk"); 
             }
         }  
         else{
@@ -83,7 +96,7 @@ export class PlayerMovementController extends Component {
                                                     this.rb.linearFactor.y,
                                                 lerp(this.zSpeed,0,this.speed*deltaTime)));
 
-            this.playAnimation("idle");
+            this.playerAnimation.playAnimation("idle");
         }
 
         //Check Lagi bergerak di-x atau ga
@@ -91,9 +104,6 @@ export class PlayerMovementController extends Component {
 
         //Check lagi bergerak di-z atau ga
         this.checkIsMovingZDimension();
-
-        // Test
-        // this.rb.setAngularVelocity(new Vec3(0,3,0));
 
         this.node.getRotation().getEulerAngles(this.currentRotation);
 
@@ -150,7 +160,7 @@ export class PlayerMovementController extends Component {
             desiredRotation = new Vec3(0, 0, 0);
         }
 
-        // If a desired rotation is set, smoothly rotate towards it
+        // langsung rotate
        if (desiredRotation) {
             this.rotateInstantly(desiredRotation);
         }
@@ -186,12 +196,14 @@ export class PlayerMovementController extends Component {
                 this.isMovingRight = true;
                 if(this.isFacingRight){
                     this.flip();
+                    this.playerAnimation.flip();
                 }
                 break;
             case KeyCode.KEY_A:
                 this.isMovingLeft = true;
                 if(!this.isFacingRight){
                     this.flip();
+                    this.playerAnimation.flip();
                 }
                 break;
             case KeyCode.KEY_W:
@@ -261,12 +273,12 @@ export class PlayerMovementController extends Component {
         return false;
     }
     
-    playAnimation(clipName:string){
-        if(this.currentClip != clipName){
-            this.objectAnimation.play(clipName);
-            this.currentClip = clipName;
-        }
-    }
+    // playAnimation(clipName:string){
+    //     if(this.currentClip != clipName){
+    //         this.objectAnimation.play(clipName);
+    //         this.currentClip = clipName;
+    //     }
+    // }
 
     //By Rotation / Angle 
     flip(){

@@ -3,11 +3,16 @@ import { EnemyController } from './EnemyController';
 import { Gate } from '../Puzzle-Key/Gate';
 import { teleporter } from '../../Etc/teleporter';
 import { statusController } from './statusController';
+import { healthBarController } from '../../Etc/healthBarController';
+import { levelStats } from '../../Etc/levelStats';
 const { ccclass, property } = _decorator;
 
 @ccclass('HurtboxController')
 export class HurtboxController extends Component {
-    @property({type:EnemyController}) private entityCon:EnemyController|null;
+    // @property({type:EnemyController}) private entityCon:EnemyController|null;
+    
+    private spriteHolder:Node|null;
+
     private collider: CapsuleCollider;
 
     private rb: RigidBody;
@@ -24,8 +29,15 @@ export class HurtboxController extends Component {
         this.collider.on('onTriggerEnter', this.onTriggerEnter, this);
         this.collider.addMask(1);
 
-        
-        
+
+        //Sprite Holder kalau dia player
+        if(this.node.name === "Player"){
+            this.spriteHolder = this.node.getParent().getChildByName("spriteHolder");
+            
+        }else{ //Sprite Holder kalau enemy
+            this.spriteHolder = this.node.getParent().getParent().getChildByName("spriteHolder");
+            // console.log(this.spriteHolder.children)
+        }
     }
 
    onCollisionEnter(event: ICollisionEvent) {
@@ -68,20 +80,51 @@ export class HurtboxController extends Component {
         let selfEntity:string = selfNode.name.substring(0,5);
         let otherEntity:string = otherNode.name.substring(0,5);
 
-        console.log(selfEntity+" "+otherEntity)
+        // console.log(selfEntity+" "+otherEntity)
 
         if( (selfEntity==="Playe" && otherEntity==="hitbo") || (selfEntity==="enemy" && otherEntity==="hitbo")  ){
 
             let stats:statusController|null= selfNode.getComponent(statusController);
             
-            // console.log("in trigger stats")
+            let healthBar : healthBarController | null;
+
+            if(selfEntity === "Playe"){
+                healthBar = this.spriteHolder.getChildByName("playerSprite").getChildByName("healthBarNode").getComponent(healthBarController);
+            } 
+            else{
+                let i=1;
+                for (i;i<= levelStats.getTotalEnemyAmount() ;i++){
+                    let enemyCounter = "enemy-dummy" +i;
+                    let spriteCounter = "enemySprite"+i;
+
+                    console.log(selfNode.name +" "+ enemyCounter)
+                    if(selfNode.name === enemyCounter){
+                        
+                        if(this.spriteHolder.getChildByName(`${spriteCounter}`)){
+                            healthBar = this.spriteHolder.getChildByName(`${spriteCounter}`).getChildByName("healthBarNode").getComponent(healthBarController);
+
+                        }
+                        // console.log(this.spriteHolder.getChildByName(`${spriteCounter}`));
+                        console.log()
+                        break;
+                    }
+                }
+            }
+
+
             if(stats != null){
                 let dmg = stats.getDamageStat();
 
 
                 let isBeingHurt = stats.getHurtCondition();
                 if(!isBeingHurt){
+
+                    //Kurangin darah
                     stats.receiveDamage(dmg);
+                    
+                    //Set scale dari greenbar
+                    healthBar.reduceGreenbar(stats.getHealthPercentage());
+
 
                     this.scheduleOnce(()=>{
 

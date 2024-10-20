@@ -25,7 +25,7 @@ export class EnemyController extends Component {
         this.canAttack = false;
 
         //Tambahkan komponen EnemyMovement
-        this.addComponent(EnemyMovement);
+        // this.addComponent(EnemyMovement);
     }
 
     changeMesh(){

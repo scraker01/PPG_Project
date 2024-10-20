@@ -1,7 +1,7 @@
 import { _decorator, Component, lerp, Node, RigidBody, Vec3,PhysicsSystem, randomRangeInt, misc} from 'cc';
 const { ccclass, property } = _decorator;
-import { HitboxController } from '../Controller/HitboxController';
 import { EnemyController } from '../Controller/EnemyController';
+import { levelStats } from '../../Etc/levelStats';
 
 @ccclass('EnemyMovement')
 export class EnemyMovement extends Component {
@@ -12,6 +12,7 @@ export class EnemyMovement extends Component {
     private enemyPos:Vec3;
     private rb:RigidBody;
 
+    private spriteHolder;
     
 
     start() {
@@ -19,15 +20,44 @@ export class EnemyMovement extends Component {
         this.rb = this.getComponent(RigidBody);
         
         this.walkPointRange = 5;
+        
+        this.spriteHolder = this.node.getParent().getParent().getChildByName("spriteHolder");
        
         // this.walkPointSet = true;
     }
     
     update(deltaTime: number) {
 
+        //Untuk HealthBar
+        let healthBar;
+        let i =1;
+        // console.log(levelStats.getEnemyAmount());
+
+        //Ga bisa gini soalnya nanti dikurangin enemyAmountnya
+        //Pakai total EnemyAmount soalnya nanti dikurangin kalo enemyAmount biasa
+        console.log(levelStats.getTotalEnemyAmount());
+        for(i;i<=levelStats.getTotalEnemyAmount();i++){
+            let enemyCounter = "enemy-dummy"+i;
+            let spriteCounter = "enemySprite"+i;
+
+            if(this.node.name === enemyCounter){
+                healthBar = this.spriteHolder.getChildByName(`${spriteCounter}`);
+                let nodeWorldPos = this.node.getWorldPosition();
+                healthBar.setWorldPosition(nodeWorldPos);
+
+                
+            }
+
+        }
+
+
         // posisi dalam Vec3
-        let playerPos = this.player.getPosition();  // Assume you have a player node
-        let enemyPos = this.node.getPosition();    // Assume you have an enemy node
+        let playerPos = this.player.getPosition();  
+        let enemyPos = this.node.getPosition();   
+
+
+        // console.log(this.node.getParent().name)
+        
 
         // Arah enemy ke player
         let direction = new Vec3(
@@ -36,9 +66,13 @@ export class EnemyMovement extends Component {
             playerPos.z - enemyPos.z
         );
 
+        
         let dist = new Vec3(direction.x,direction.y,direction.z);
-
+        
+        // console.log(direction.length())
+        
         if(direction.length() > 1 && direction.length() < this.walkPointRange){
+            
 
             //Normalisasi arah vektor
             dist.normalize();
@@ -48,6 +82,11 @@ export class EnemyMovement extends Component {
             let moveStep = dist.multiplyScalar(moveSpeed * deltaTime);
             let newEnemyPos = enemyPos.add(moveStep);
     
+            // if(this.node.getParent().name === "spawner"){
+            //     console.log("move step   :"+moveStep); 
+            //     console.log("enemy pos :"+newEnemyPos); 
+
+            // }
 
             // set posisi baru dari enemy
             this.node.setPosition(newEnemyPos);
@@ -57,8 +96,13 @@ export class EnemyMovement extends Component {
             // rotate enemy menghadap ke player
             // XZ digunakan untuk arah rotasinya
             let angleToPlayer = Math.atan2(dist.x, dist.z); // angle dalam radians
+
             this.node.setRotationFromEuler(0, misc.radiansToDegrees(angleToPlayer), 0);
+
+            //untuk healthbar, supaya tidak dirotate
+            // this.node.getChildByName("healthBarNode").setRotationFromEuler(new Vec3(0,0,0));
         } 
+
         if(direction.length() <= 1){
             
 

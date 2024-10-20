@@ -1,13 +1,17 @@
 import { _decorator, Component, Node } from 'cc';
+import { spawnerController } from '../Controller/spawnerController';
 const { ccclass, property } = _decorator;
 
 @ccclass('Gate')
 export class Gate extends Component {
 
     private static gateNode:Node;
+    private spawnerController:spawnerController;
 
     protected start(): void {
-        Gate.gateNode = this.node;
+        Gate.gateNode = this.node;     
+        
+        
     }
 
     static makeItDisappear(){
@@ -16,6 +20,8 @@ export class Gate extends Component {
 
     static makeItAppear(){
         Gate.gateNode.active = true;
+        // Gate.spawnerController.activateEnemy();
+        
     }
 }
 

@@ -13,15 +13,15 @@ export class statusController extends Component {
     private dead:boolean;
 
     //HURT CONDITIONS
-    isBeingHurt:boolean;
-    delayHurtTimer:number;
+    private isBeingHurt:boolean;
+    private delayHurtTimer:number;
 
-    //levelStats -> jika mati maka nanti kurangi di enemyArray (rencana awal mau di taro di update tapi akan berat jika ambil array setiap update)
-
+    //ORIGINAL HEALTH USED FOR PERCENTAGE
+    private maxHealth:number;
 
     start() {
 
-
+        this.maxHealth = this.health;
         this.dead = false;
         this.isBeingHurt = false;
 
@@ -35,9 +35,13 @@ export class statusController extends Component {
             this.dead = true;
             this.node.active = false;
             
+
+
             levelStats.minusEnemyAmount();
+            levelStats.minusCurrentEnemyAmount();
             
-            if(levelStats.getEnemyAmount() == 0){
+            //LIAT JUMLAH MUSUH DI STAGE PERTAMA (CURRENT)
+            if(levelStats.getCurrentEnemyAmount() == 0){
                 levelStats.deacGate();
             }
 
@@ -73,6 +77,10 @@ export class statusController extends Component {
 
     getHurtTimer():number{
         return this.delayHurtTimer;
+    }
+
+    getHealthPercentage():number{
+        return this.health/this.maxHealth;
     }
 
 }
