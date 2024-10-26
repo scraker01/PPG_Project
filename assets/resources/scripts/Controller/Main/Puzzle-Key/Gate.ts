@@ -6,12 +6,9 @@ const { ccclass, property } = _decorator;
 export class Gate extends Component {
 
     private static gateNode:Node;
-    private spawnerController:spawnerController;
 
     protected start(): void {
         Gate.gateNode = this.node;     
-        
-        
     }
 
     static makeItDisappear(){

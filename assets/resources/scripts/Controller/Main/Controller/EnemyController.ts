@@ -1,4 +1,4 @@
-import { _decorator, CCFloat, Component, lerp, Material, MeshRenderer, Node, RigidBody, Vec3 } from 'cc';
+import { _decorator, CCFloat, clamp, Component, lerp, Material, MeshRenderer, Node, randomRangeInt, RigidBody, Vec3 } from 'cc';
 import { EnemyMovement } from '../Enemy/EnemyMovement';
 import { HitboxController } from './HitboxController';
 const { ccclass, property } = _decorator;
@@ -16,50 +16,78 @@ export class EnemyController extends Component {
     //ATTACK STATS
     private attackDelay:number;
     private canAttack:boolean;
+    
+    //ATTACK TIMINGS 
+    private fixedT:number;
+    private timing:number;
 
     start() {
         this.meshRenderer = this.getComponent(MeshRenderer);
 
         this.mat = this.meshRenderer.getRenderMaterial(0);
         this.attackDelay = 2;
-        this.canAttack = false;
+        this.canAttack = true;
 
+        //Attack Timing per 60
+        this.fixedT = 60;
+        
+        this.timing= this.fixedT;
         //Tambahkan komponen EnemyMovement
         // this.addComponent(EnemyMovement);
     }
 
+    
     changeMesh(){
         this.node.active = false;
         this.scheduleOnce(()=>{
             this.node.active = true;
         },1);
     }
-
+    
     attack(){
         //Todo : tambah if condition untuk kondisi canAttack
-
+        
         let hitboxes:Node[] = this.node.getChildByName("hitboxNode").children;
-
+        
         if(this.canAttack){
-            console.log("attack");
-
+            // console.log("attack");
+            
             this.canAttack=false;
-
+            
             
             for(let curHbx=0;curHbx < hitboxes.length;curHbx++ ){
                 let hitbox = hitboxes[curHbx];
                 hitbox.getComponent(HitboxController).activateHitbox();
             }
             
-
         }
-
+        
         this.scheduleOnce(()=>{
             this.canAttack = true;
         },this.attackDelay);
         
-            
+        
     }
+    
+    private generateVariableT():number{
+        return randomRangeInt(30,60);
+    }
+
+    public getCanAttack():boolean{
+        return this.canAttack;
+    }
+
+    public getTiming():number{
+        return this.timing;
+    }
+
+    protected update(dt: number): void {
+        if(this.timing<0){
+            this.timing = this.fixedT + this.generateVariableT();
+        }
+        this.timing--;
+    }
+
 
 
 }

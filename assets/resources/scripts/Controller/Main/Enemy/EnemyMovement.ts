@@ -5,7 +5,8 @@ import { levelStats } from '../../Etc/levelStats';
 
 @ccclass('EnemyMovement')
 export class EnemyMovement extends Component {
-    private walkPointRange:number;
+    private furthestWalkRange:number;
+    private closestWalkRange:number;
     private player:Node;  
     
     private playerPos:Vec3;
@@ -19,7 +20,8 @@ export class EnemyMovement extends Component {
         this.player = this.node.getParent().getParent().getChildByName("Player");
         this.rb = this.getComponent(RigidBody);
         
-        this.walkPointRange = 5;
+        this.furthestWalkRange = 5;
+        this.closestWalkRange = 1;
         
         this.spriteHolder = this.node.getParent().getParent().getChildByName("spriteHolder");
        
@@ -35,7 +37,7 @@ export class EnemyMovement extends Component {
 
         //Ga bisa gini soalnya nanti dikurangin enemyAmountnya
         //Pakai total EnemyAmount soalnya nanti dikurangin kalo enemyAmount biasa
-        console.log(levelStats.getTotalEnemyAmount());
+      
         for(i;i<=levelStats.getTotalEnemyAmount();i++){
             let enemyCounter = "enemy-dummy"+i;
             let spriteCounter = "enemySprite"+i;
@@ -52,8 +54,8 @@ export class EnemyMovement extends Component {
 
 
         // posisi dalam Vec3
-        let playerPos = this.player.getPosition();  
-        let enemyPos = this.node.getPosition();   
+        let playerPos = this.player.getWorldPosition();  
+        let enemyPos = this.node.getWorldPosition();   
 
 
         // console.log(this.node.getParent().name)
@@ -66,16 +68,20 @@ export class EnemyMovement extends Component {
             playerPos.z - enemyPos.z
         );
 
-        
+        //Dipisah untuk arah dan jaraknya
         let dist = new Vec3(direction.x,direction.y,direction.z);
         
-        // console.log(direction.length())
+        let directionLength = direction.length();
         
-        if(direction.length() > 1 && direction.length() < this.walkPointRange){
+        console.log("direction length : "+direction.length())
+        
+        if(directionLength > this.closestWalkRange && directionLength < this.furthestWalkRange){
             
-
+            
             //Normalisasi arah vektor
             dist.normalize();
+
+            // console.log("normalize distance : "+dist.length())
     
             // Bergerak ke arah player
             let moveSpeed = 1; // Set movement speed
@@ -89,7 +95,7 @@ export class EnemyMovement extends Component {
             // }
 
             // set posisi baru dari enemy
-            this.node.setPosition(newEnemyPos);
+            this.node.setWorldPosition(newEnemyPos);
             // this.rb.setLinearVelocity(moveStep);
             
     
@@ -101,16 +107,32 @@ export class EnemyMovement extends Component {
 
             //untuk healthbar, supaya tidak dirotate
             // this.node.getChildByName("healthBarNode").setRotationFromEuler(new Vec3(0,0,0));
+
+            if(directionLength < this.closestWalkRange+0.5){
+
+                let enemyCon : EnemyController = this.getComponent(EnemyController);
+                let canAttack = enemyCon.getCanAttack();
+                let timing = enemyCon.getTiming();
+
+                console.log(canAttack)
+
+                //Pakai timing (delay) supaya tidak langsung serang (ada cooldown / chargenya)
+                if(canAttack && timing === 0){
+                    enemyCon.attack();
+
+                }
+
+            }
         } 
 
-        if(direction.length() <= 1){
+        // else if (directionLength <= this.closestWalkRange) {
             
 
-            this.getComponent(EnemyController).attack();
+        //     this.getComponent(EnemyController).attack();
             
-            //Todo : implementasi 
+        //     //Todo : implementasi 
             
-        }
+        // }
     }
 
     private checkDistToPlayer(playerPos, enemyPos){

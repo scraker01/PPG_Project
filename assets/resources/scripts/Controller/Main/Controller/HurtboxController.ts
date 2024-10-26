@@ -93,11 +93,13 @@ export class HurtboxController extends Component {
             } 
             else{
                 let i=1;
+
+                //Pakai total EnemyAmount soalnya nanti dikurangin kalo enemyAmount biasa
                 for (i;i<= levelStats.getTotalEnemyAmount() ;i++){
                     let enemyCounter = "enemy-dummy" +i;
                     let spriteCounter = "enemySprite"+i;
 
-                    console.log(selfNode.name +" "+ enemyCounter)
+                    // console.log(selfNode.name +" "+ enemyCounter)
                     if(selfNode.name === enemyCounter){
                         
                         if(this.spriteHolder.getChildByName(`${spriteCounter}`)){
@@ -105,7 +107,7 @@ export class HurtboxController extends Component {
 
                         }
                         // console.log(this.spriteHolder.getChildByName(`${spriteCounter}`));
-                        console.log()
+                        
                         break;
                     }
                 }

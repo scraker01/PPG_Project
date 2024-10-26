@@ -1,5 +1,6 @@
 import { _decorator, CCFloat, Component, Node } from 'cc';
 import { levelStats } from '../../Etc/levelStats';
+import { sceneController } from '../../Etc/sceneController';
 const { ccclass, property } = _decorator;
 
 @ccclass('statusController')
@@ -35,14 +36,26 @@ export class statusController extends Component {
             this.dead = true;
             this.node.active = false;
             
-
-
+            //Kurangin dari keseluruhan
             levelStats.minusEnemyAmount();
+            
+            //Kurangin dari fase sekarang
             levelStats.minusCurrentEnemyAmount();
             
             //LIAT JUMLAH MUSUH DI STAGE PERTAMA (CURRENT)
             if(levelStats.getCurrentEnemyAmount() == 0){
                 levelStats.deacGate();
+            }
+            console.log(levelStats.getEnemyAmount());
+            //AKTIVASI TELEPORT
+            if(levelStats.getEnemyAmount()== 0){
+                
+                levelStats.activateTeleport();
+            }
+
+            //Kalau player yang mati
+            if(this.node.name === "Player"){
+                sceneController.loadScene("dead");
             }
 
             return true;
@@ -53,12 +66,13 @@ export class statusController extends Component {
     receiveDamage(dmg:number){
         if(!this.dead && !this.isBeingHurt){
             this.health-= dmg;
+
             this.isDead();
 
             this.isBeingHurt = true;
 
 
-            console.log(this.node.name + " health left : " + this.health);
+            // console.log(this.node.name + " health left : " + this.health);
             
         }
     }

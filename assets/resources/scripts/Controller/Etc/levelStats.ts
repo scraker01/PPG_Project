@@ -1,6 +1,7 @@
 import { _decorator, Component, director, Node, Scene } from 'cc';
 import { Gate } from '../Main/Puzzle-Key/Gate';
 import { spawnerController } from '../Main/Controller/spawnerController';
+import { teleporter } from './teleporter';
 const { ccclass, property } = _decorator;
 
 @ccclass('levelStats')
@@ -48,7 +49,7 @@ export class levelStats extends Component {
         }
         
         levelStats.setCurrentEnemyAmount(levelStats.enemyAmount);
-        levelStats.setTotalEnemyAmount(levelStats.enemyAmount);
+        
 
         this.spawner = this.node.getParent().getParent().getParent().getChildByName("World").getChildByName("spawner");
         
@@ -100,6 +101,10 @@ export class levelStats extends Component {
 
         spawnerController.activateEnemy();
      
+    }
+
+    static activateTeleport(){
+        teleporter.makeItAppear();
     }
     
 

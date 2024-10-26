@@ -5,13 +5,25 @@ const { ccclass, property } = _decorator;
 export class IntroController extends Component {
     
     start() {
-        input.on(Input.EventType.KEY_DOWN,this.keyDown,this);
+        // input.on(Input.EventType.KEY_DOWN,this.keyDown,this);
         director.preloadScene("main");
     }
 
-    keyDown(event:EventKeyboard){
-        
+    toMain(){
         director.loadScene("main");
+    }
+
+    toOpenOptions(){
+        alert("Fitur Belum Tersedia");
+    }
+    
+    toCloseOptions(){
+        
+    }
+    
+    toQuit(){
+        alert("Fitur Belum Tersedia");
+        
     }
 
 

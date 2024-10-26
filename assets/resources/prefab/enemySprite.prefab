@@ -191,10 +191,16 @@
       "__id__": 11
     },
     "_materials": [
-      null
+      {
+        "__uuid__": "ade8a15a-dcca-4b3c-84c6-f6476ac875bb",
+        "__expectedType__": "cc.Material"
+      }
     ],
     "_visFlags": 0,
-    "_spriteFrame": null,
+    "_spriteFrame": {
+      "__uuid__": "e4c320a4-f092-4d1f-ac96-6ba36408cd59@f9941",
+      "__expectedType__": "cc.SpriteFrame"
+    },
     "_mode": 0,
     "_color": {
       "__type__": "cc.Color",
@@ -264,6 +270,7 @@
       "__id__": 0
     },
     "fileId": "61xzxvSQpKlYNOeB9ZXHvJ",
+    "instance": null,
     "targetOverrides": null,
     "nestedPrefabInstanceRoots": [
       {

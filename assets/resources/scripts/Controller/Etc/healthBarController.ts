@@ -15,6 +15,7 @@ export class healthBarController extends Component {
     reduceGreenbar(healthPercentage:number){
         
         if(healthPercentage<=0)this.deactivateHealthBar();
+        
         for(let bar of this.barChildren){
             
             if(bar.name === "greenBar"){
