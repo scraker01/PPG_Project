@@ -31,7 +31,7 @@ export class statusController extends Component {
 
     isDead(){
         if(this.health<=0){
-            console.log(this.health)
+            // console.log(this.health)
             
             this.dead = true;
             this.node.active = false;
@@ -46,7 +46,7 @@ export class statusController extends Component {
             if(levelStats.getCurrentEnemyAmount() == 0){
                 levelStats.deacGate();
             }
-            console.log(levelStats.getEnemyAmount());
+            // console.log(levelStats.getEnemyAmount());
             //AKTIVASI TELEPORT
             if(levelStats.getEnemyAmount()== 0){
                 

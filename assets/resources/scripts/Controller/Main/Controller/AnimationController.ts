@@ -8,6 +8,8 @@ export class AnimationController extends Component {
     private objectAnimation:Animation;
     private currentClip:string;
     
+
+
     protected start(): void {
         this.objectAnimation = this.node.getComponent(Animation);    
     }
@@ -25,11 +27,10 @@ export class AnimationController extends Component {
     }
 
     flip(){
-        this.scale = this.node.getScale();
+        let scale = this.node.getScale();
         // let rotation = this.node.getRotation();
-        this.node.setScale(this.scale.x*-1, this.scale.y,this.scale.z);
+        this.node.setScale(scale.x*-1, scale.y,scale.z);
         
-        this.isFacingRight = !this.isFacingRight;
     }
 }
 

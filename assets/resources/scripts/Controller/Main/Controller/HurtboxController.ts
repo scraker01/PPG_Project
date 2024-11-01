@@ -94,7 +94,7 @@ export class HurtboxController extends Component {
             else{
                 let i=1;
 
-                //Pakai total EnemyAmount soalnya nanti dikurangin kalo enemyAmount biasa
+                //Pakai total EnemyAmount soalnya nanti dikurangin kalo enemyAmount biasa malah salah hitungan
                 for (i;i<= levelStats.getTotalEnemyAmount() ;i++){
                     let enemyCounter = "enemy-dummy" +i;
                     let spriteCounter = "enemySprite"+i;
@@ -113,7 +113,7 @@ export class HurtboxController extends Component {
                 }
             }
 
-
+            
             if(stats != null){
                 let dmg = stats.getDamageStat();
 

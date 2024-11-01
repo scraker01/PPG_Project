@@ -849,7 +849,7 @@
       "_spriteFrame"
     ],
     "value": {
-      "__uuid__": "384b8dbb-8418-4412-ab2a-00b190e4ded3@f9941",
+      "__uuid__": "e4c320a4-f092-4d1f-ac96-6ba36408cd59@f9941",
       "__expectedType__": "cc.SpriteFrame"
     }
   },
@@ -1806,9 +1806,9 @@
     ],
     "value": {
       "__type__": "cc.Vec3",
-      "x": -12.962,
+      "x": -8.377,
       "y": 1.237,
-      "z": -2.596
+      "z": 3.108
     }
   },
   {
@@ -6504,7 +6504,7 @@
     "propertyPath": [
       "health"
     ],
-    "value": 300
+    "value": 250
   },
   {
     "__type__": "cc.TargetInfo",

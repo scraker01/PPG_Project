@@ -30,8 +30,14 @@ export class levelStats extends Component {
     //Spawn Controller
     private spawner:Node;
     
+    protected onLoad(): void {
+        
+        levelStats.resetEnemyAmount();
+        levelStats.resetCurrentEnemyAmount();
+    }
 
     start() {
+
         this.enemyParentNode = this.node.getParent().getParent().getParent().getChildByName("World").getChildByName("enemies");
         this.spawnerParentNode = this.node.getParent().getParent().getParent().getChildByName("World").getChildByName("spawner");
 

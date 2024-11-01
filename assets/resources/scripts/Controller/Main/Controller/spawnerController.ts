@@ -27,6 +27,9 @@ export class spawnerController extends Component {
     @property({type:CCInteger})
     private numberOfSpawn:number;
 
+    protected onLoad(): void {
+        
+    }
 
     start() {
         
@@ -39,21 +42,24 @@ export class spawnerController extends Component {
         //Nilai digunakan untuk create node dan menyesuaikan angka setelah yang ditaro secara manual
         this.initialAmount = this.node.getParent().getChildByName("enemies").children.length + 1;
 
-        this.createPool(this.prefab,this.node,spawnerController.spawnPool);
-        this.randomizerSpawnPos();
+        //Perlu reset apabila mengulang game, sebab pool masih menyangkut jika tidak
+        spawnerController.resetAll();
 
+        this.createPool(this.prefab,this.node,spawnerController.spawnPool);
+
+        this.randomizerSpawnPos();
+        
         this.createPool(this.prefSpriteHolder,this.spriteHolder,spawnerController.spriteHolderPool);
 
         for(let counter of spawnerController.spawnPool){
             levelStats.addEnemyAmount();
         }
 
-        // console.log(levelStats.getCurrentEnemyAmount());
         levelStats.setTotalEnemyAmount(levelStats.getEnemyAmount());
     }
 
     createPool(prefab:Prefab, parent:Node,pool:Node[]){
-        
+        // console.log(this)
         for(let i =this.initialAmount; i<this.numberOfSpawn+this.initialAmount;i++){
 
             let enemyNode:Node = instantiate(prefab);
@@ -73,6 +79,7 @@ export class spawnerController extends Component {
     }
 
     randomizerSpawnPos(){
+        
         for(let enemy of spawnerController.spawnPool){
             let x = randomRangeInt(this.minRange,this.maxRange);
             let z = randomRangeInt(this.minRange,this.maxRange);
@@ -93,6 +100,11 @@ export class spawnerController extends Component {
             
             enemy.active = true;
         }
+    }
+
+    static resetAll(){
+        spawnerController.spawnPool = [];
+        spawnerController.spriteHolderPool = [];
     }
 
 

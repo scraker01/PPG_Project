@@ -73,7 +73,7 @@ export class EnemyMovement extends Component {
         
         let directionLength = direction.length();
         
-        console.log("direction length : "+direction.length())
+        // console.log("direction length : "+direction.length())
         
         if(directionLength > this.closestWalkRange && directionLength < this.furthestWalkRange){
             
