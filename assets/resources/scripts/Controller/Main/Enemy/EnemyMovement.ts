@@ -2,6 +2,9 @@ import { _decorator, Component, lerp, Node, RigidBody, Vec3,PhysicsSystem, rando
 const { ccclass, property } = _decorator;
 import { EnemyController } from '../Controller/EnemyController';
 import { levelStats } from '../../Etc/levelStats';
+import { AnimationController } from '../Controller/AnimationController';
+import { spriteController } from '../../Etc/spriteController';
+
 
 @ccclass('EnemyMovement')
 export class EnemyMovement extends Component {
@@ -13,8 +16,15 @@ export class EnemyMovement extends Component {
     private enemyPos:Vec3;
     private rb:RigidBody;
 
-    private spriteHolder;
+    //Untuk Sprite
+    private spriteHolder:Node;
+    private isSpriteConnected:boolean;
     
+    //Untuk Animasi
+    private AnimationConnection:AnimationController|null;
+    private spriteConnection:spriteController|null;
+
+
 
     start() {
         this.player = this.node.getParent().getParent().getChildByName("Player");
@@ -26,12 +36,16 @@ export class EnemyMovement extends Component {
         this.spriteHolder = this.node.getParent().getParent().getChildByName("spriteHolder");
        
         // this.walkPointSet = true;
+
+        this.isSpriteConnected = false;
+    
+
     }
     
     update(deltaTime: number) {
 
         //Untuk HealthBar
-        let healthBar;
+        let sprite;
         let i =1;
         // console.log(levelStats.getEnemyAmount());
 
@@ -43,11 +57,18 @@ export class EnemyMovement extends Component {
             let spriteCounter = "enemySprite"+i;
 
             if(this.node.name === enemyCounter){
-                healthBar = this.spriteHolder.getChildByName(`${spriteCounter}`);
-                let nodeWorldPos = this.node.getWorldPosition();
-                healthBar.setWorldPosition(nodeWorldPos);
+                sprite = this.spriteHolder.getChildByName(`${spriteCounter}`);
 
-                
+                let nodeWorldPos = this.node.getWorldPosition();
+                sprite.setWorldPosition(nodeWorldPos);
+
+                //Konek sprite untuk pertama kalinya
+                if(!this.isSpriteConnected){
+                    this.isSpriteConnected= true;
+
+                    this.AnimationConnection = sprite.getComponent(AnimationController);
+                    this.spriteConnection = sprite.getComponent(spriteController);
+                }
             }
 
         }
@@ -77,7 +98,6 @@ export class EnemyMovement extends Component {
         
         if(directionLength > this.closestWalkRange && directionLength < this.furthestWalkRange){
             
-            
             //Normalisasi arah vektor
             dist.normalize();
 
@@ -87,12 +107,6 @@ export class EnemyMovement extends Component {
             let moveSpeed = 1; // Set movement speed
             let moveStep = dist.multiplyScalar(moveSpeed * deltaTime);
             let newEnemyPos = enemyPos.add(moveStep);
-    
-            // if(this.node.getParent().name === "spawner"){
-            //     console.log("move step   :"+moveStep); 
-            //     console.log("enemy pos :"+newEnemyPos); 
-
-            // }
 
             // set posisi baru dari enemy
             this.node.setWorldPosition(newEnemyPos);
@@ -105,40 +119,92 @@ export class EnemyMovement extends Component {
 
             this.node.setRotationFromEuler(0, misc.radiansToDegrees(angleToPlayer), 0);
 
-            //untuk healthbar, supaya tidak dirotate
-            // this.node.getChildByName("healthBarNode").setRotationFromEuler(new Vec3(0,0,0));
+            //Implementasi animasi dan arah
+            let x = direction.x;
+            let z = direction.z;
 
+            /*
+            Z < 0 ke belakang
+            Z > 0 ke depan
+
+            X < 0 ke kiri
+            X > 0 ke kanan
+            */
+            console.log("x: "+x)
+            console.log("z: "+z)
+
+            if(x>0){
+                
+                if(!this.spriteConnection.getFacingRight()){
+                    this.spriteConnection.flip();
+                }
+                
+            } else if(x<0){
+                if(this.spriteConnection.getFacingRight()){
+                    this.spriteConnection.flip();
+                }
+                
+            }
+            
+            if(z>0){
+                if(!this.spriteConnection.getFacingFront()){
+                    this.spriteConnection.setFacingFront();
+                }
+            }else if(z<0){
+                if(this.spriteConnection.getFacingFront()){
+                    this.spriteConnection.setFacingFront();
+                }
+            }
+
+
+
+            //Di dalam jarak serangan
             if(directionLength < this.closestWalkRange+0.5){
 
                 let enemyCon : EnemyController = this.getComponent(EnemyController);
                 let canAttack = enemyCon.getCanAttack();
                 let timing = enemyCon.getTiming();
 
-                console.log(canAttack)
 
                 //Pakai timing (delay) supaya tidak langsung serang (ada cooldown / chargenya)
                 if(canAttack && timing === 0){
+
+                    //Set animasi serangan ke depan
+                    if(this.spriteConnection.getFacingFront()){
+                        this.AnimationConnection.playAnimation("attackFront");
+                    }
+                    //Set animasi serangan ke belakang
+                    else{
+                        this.AnimationConnection.playAnimation("attackBack");
+
+                    }
+
+                    //Serang
                     enemyCon.attack();
+
 
                 }
 
             }
+            //Di luar jarak
+            else{
+
+                if(this.spriteConnection.getFacingFront()){
+                    this.AnimationConnection.playAnimation("walkFront");
+                }else{
+                    this.AnimationConnection.playAnimation("walkBack");
+
+                }
+            }
+        
+                        
         } 
 
-        // else if (directionLength <= this.closestWalkRange) {
-            
-
-        //     this.getComponent(EnemyController).attack();
-            
-        //     //Todo : implementasi 
-            
-        // }
     }
 
-    private checkDistToPlayer(playerPos, enemyPos){
-        return Math.sqrt(Math.pow((playerPos.x - enemyPos.x),2)+Math.pow((playerPos.z - enemyPos.z),2))
+    getSpriteConnection():spriteController{
+        return this.spriteConnection;
     }
-
     
 }
 

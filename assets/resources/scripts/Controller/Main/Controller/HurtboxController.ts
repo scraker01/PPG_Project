@@ -5,6 +5,8 @@ import { teleporter } from '../../Etc/teleporter';
 import { statusController } from './statusController';
 import { healthBarController } from '../../Etc/healthBarController';
 import { levelStats } from '../../Etc/levelStats';
+import { AnimationController } from './AnimationController';
+import { spriteController } from '../../Etc/spriteController';
 const { ccclass, property } = _decorator;
 
 @ccclass('HurtboxController')
@@ -101,10 +103,21 @@ export class HurtboxController extends Component {
 
                     // console.log(selfNode.name +" "+ enemyCounter)
                     if(selfNode.name === enemyCounter){
+                        let enemy = this.spriteHolder.getChildByName(`${spriteCounter}`);
                         
-                        if(this.spriteHolder.getChildByName(`${spriteCounter}`)){
-                            healthBar = this.spriteHolder.getChildByName(`${spriteCounter}`).getChildByName("healthBarNode").getComponent(healthBarController);
+                        if(enemy){
+                            healthBar = enemy.getChildByName("healthBarNode").getComponent(healthBarController);
 
+                        }
+
+                        let animationConnection:AnimationController = enemy.getComponent(AnimationController);
+                        let spriteConnection:spriteController = enemy.getComponent(spriteController);
+
+                        if(spriteConnection.getFacingFront()){
+                            animationConnection.playAnimation("hurtFront");
+                        }else{
+                            animationConnection.playAnimation("hurtBack");
+                            
                         }
                         // console.log(this.spriteHolder.getChildByName(`${spriteCounter}`));
                         

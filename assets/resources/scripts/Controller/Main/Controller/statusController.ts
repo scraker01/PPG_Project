@@ -1,6 +1,7 @@
 import { _decorator, CCFloat, Component, Node } from 'cc';
 import { levelStats } from '../../Etc/levelStats';
 import { sceneController } from '../../Etc/sceneController';
+import { EnemyMovement } from '../Enemy/EnemyMovement';
 const { ccclass, property } = _decorator;
 
 @ccclass('statusController')
@@ -34,7 +35,12 @@ export class statusController extends Component {
             // console.log(this.health)
             
             this.dead = true;
+
+            //Node Enemy
             this.node.active = false;
+
+            //Node Sprite
+            this.node.getComponent(EnemyMovement).getSpriteConnection().setNodeDeactivate();
             
             //Kurangin dari keseluruhan
             levelStats.minusEnemyAmount();
@@ -46,6 +52,7 @@ export class statusController extends Component {
             if(levelStats.getCurrentEnemyAmount() == 0){
                 levelStats.deacGate();
             }
+
             // console.log(levelStats.getEnemyAmount());
             //AKTIVASI TELEPORT
             if(levelStats.getEnemyAmount()== 0){
@@ -71,8 +78,6 @@ export class statusController extends Component {
 
             this.isBeingHurt = true;
 
-
-            // console.log(this.node.name + " health left : " + this.health);
             
         }
     }
