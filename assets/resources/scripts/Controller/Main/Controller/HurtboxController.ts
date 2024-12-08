@@ -1,6 +1,5 @@
-import { _decorator, CapsuleCollider, Component, ICollisionEvent, ITriggerEvent, Node, RigidBody } from 'cc';
+import { _decorator, BoxCollider, CapsuleCollider, Collider, Component, ICollisionEvent, ITriggerEvent, Node, RigidBody } from 'cc';
 import { EnemyController } from './EnemyController';
-import { Gate } from '../Puzzle-Key/Gate';
 import { teleporter } from '../../Etc/teleporter';
 import { statusController } from './statusController';
 import { healthBarController } from '../../Etc/healthBarController';
@@ -15,7 +14,7 @@ export class HurtboxController extends Component {
     
     private spriteHolder:Node|null;
 
-    private collider: CapsuleCollider;
+    private collider: CapsuleCollider | BoxCollider;
 
     private rb: RigidBody;
 
@@ -24,6 +23,9 @@ export class HurtboxController extends Component {
     start() {
         // this.hitboxActive = this.node.active;
         this.collider = this.getComponent(CapsuleCollider);
+        if(!this.collider){
+            this.collider = this.getComponent(BoxCollider);
+        }
         this.rb = this.getComponent(RigidBody);
         this.rb.useCCD = true;
 
@@ -82,14 +84,20 @@ export class HurtboxController extends Component {
         let selfEntity:string = selfNode.name.substring(0,5);
         let otherEntity:string = otherNode.name.substring(0,5);
 
-        // console.log(selfEntity+" "+otherEntity)
+        console.log(selfEntity+" "+otherEntity)
 
-        if( (selfEntity==="Playe" && otherEntity==="hitbo") || (selfEntity==="enemy" && otherEntity==="hitbo")  ){
+        if( (selfEntity==="Playe" && otherEntity==="hitbo") || (selfEntity==="enemy" && otherEntity==="hitbo") || (selfEntity==="boss-")  ){
 
             let stats:statusController|null= selfNode.getComponent(statusController);
             
             let healthBar : healthBarController | null;
 
+            // Untuk boss
+            if(selfEntity === "boss-"){
+                healthBar = this.spriteHolder.getChildByName("boss-node").getChildByName("healthBarNode").getComponent(healthBarController);
+            } 
+
+            // Untuk Player & Enemy
             if(selfEntity === "Playe"){
                 healthBar = this.spriteHolder.getChildByName("playerSprite").getChildByName("healthBarNode").getComponent(healthBarController);
             } 
@@ -110,6 +118,7 @@ export class HurtboxController extends Component {
 
                         }
 
+                        //Bagian untuk atur animasi kena hit depan / belakang
                         let animationConnection:AnimationController = enemy.getComponent(AnimationController);
                         let spriteConnection:spriteController = enemy.getComponent(spriteController);
 

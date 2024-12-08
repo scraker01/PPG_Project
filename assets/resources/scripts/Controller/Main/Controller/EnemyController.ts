@@ -8,10 +8,7 @@ export class EnemyController extends Component {
     @property({type:CCFloat}) private speed:number;
 
     private enemyMovementController:EnemyMovement;
-      
-    private meshRenderer:MeshRenderer;
-    private mat:Material;
-    private idxMat:number;
+    
 
     //ATTACK STATS
     private attackDelay:number;
@@ -22,9 +19,7 @@ export class EnemyController extends Component {
     private timing:number;
 
     start() {
-        this.meshRenderer = this.getComponent(MeshRenderer);
 
-        this.mat = this.meshRenderer.getRenderMaterial(0);
         this.attackDelay = 2;
         this.canAttack = true;
 
