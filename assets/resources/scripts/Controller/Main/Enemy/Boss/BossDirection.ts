@@ -1,4 +1,4 @@
-import { _decorator, Component, misc, Node, RigidBody, Vec3 } from 'cc';
+import { _decorator, CCInteger, Component, misc, Node, RigidBody, Vec3 } from 'cc';
 import { levelStats } from '../../../Etc/levelStats';
 import { spriteController } from '../../../Etc/spriteController';
 import { AnimationController } from '../../Controller/AnimationController';
@@ -7,6 +7,9 @@ const { ccclass, property } = _decorator;
 
 @ccclass('BossDirection')
 export class BossDirection extends Component {
+    @property({type:CCInteger}) 
+    private maxDistance:number;
+
     private player:Node;  
     
     private playerPos:Vec3;
@@ -30,12 +33,12 @@ export class BossDirection extends Component {
         this.player = this.node.getParent().getParent().getChildByName("Player");
         this.rb = this.getComponent(RigidBody);
         
-        this.activationRange = 20;
+        this.activationRange = 17;
 
         
         this.spriteHolder = this.node.getParent().getParent().getChildByName("spriteHolder");
        
-        // this.walkPointSet = true;
+        // this.walkPointSet =  true;
 
         this.isSpriteConnected = false;
         this.isActivated =false;
@@ -48,21 +51,18 @@ export class BossDirection extends Component {
         let sprite;
 
 
-
-
         // if(!this.isSpriteConnected){
+        let spriteCounter = "boss-node";
 
-            let spriteCounter = "boss-node";
+        
+        sprite = this.spriteHolder.getChildByName(`${spriteCounter}`);
 
-            
-            sprite = this.spriteHolder.getChildByName(`${spriteCounter}`);
+        let nodeWorldPos = this.node.getWorldPosition();
+        // console.log("boss node location " + nodeWorldPos);
+        sprite.setWorldPosition(nodeWorldPos);
 
-            let nodeWorldPos = this.node.getWorldPosition();
-            // console.log("boss node location " + nodeWorldPos);
-            sprite.setWorldPosition(nodeWorldPos);
-
-            this.AnimationConnection = sprite.getComponent(AnimationController);
-            this.spriteConnection = sprite.getComponent(spriteController);
+        this.AnimationConnection = sprite.getComponent(AnimationController);
+        this.spriteConnection = sprite.getComponent(spriteController);
             
             // this.isSpriteConnected = true;
             
@@ -98,11 +98,6 @@ export class BossDirection extends Component {
             dist.normalize();
 
             // console.log("normalize distance : "+dist.length())
-    
-            // Bergerak ke arah player
-            let moveSpeed = 1; // Set movement speed
-            let moveStep = dist.multiplyScalar(moveSpeed * deltaTime);
-            let newEnemyPos = enemyPos.add(moveStep);
     
             // rotate enemy menghadap ke player
             // XZ digunakan untuk arah rotasinya
@@ -157,6 +152,7 @@ export class BossDirection extends Component {
 
         }
 
+        console.log(this.isActivated);
     }
 
     getSpriteConnection():spriteController{

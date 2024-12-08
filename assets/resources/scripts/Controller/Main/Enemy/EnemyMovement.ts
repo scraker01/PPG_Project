@@ -38,7 +38,7 @@ export class EnemyMovement extends Component {
         // this.walkPointSet = true;
 
         this.isSpriteConnected = false;
-    
+        
 
     }
     
@@ -72,6 +72,27 @@ export class EnemyMovement extends Component {
             }
 
         }
+
+        
+            let enemyCounter = "enemy-dummy"+i;
+            let spriteCounter = "enemySprite"+i;
+
+            if(this.node.name === enemyCounter){
+                sprite = this.spriteHolder.getChildByName(`${spriteCounter}`);
+
+                let nodeWorldPos = this.node.getWorldPosition();
+                sprite.setWorldPosition(nodeWorldPos);
+
+                //Konek sprite untuk pertama kalinya
+                if(!this.isSpriteConnected){
+                    this.isSpriteConnected= true;
+
+                    this.AnimationConnection = sprite.getComponent(AnimationController);
+                    this.spriteConnection = sprite.getComponent(spriteController);
+                }
+            }
+
+        
 
 
         // posisi dalam Vec3
@@ -130,8 +151,8 @@ export class EnemyMovement extends Component {
             X < 0 ke kiri
             X > 0 ke kanan
             */
-            console.log("x: "+x)
-            console.log("z: "+z)
+            // console.log("x: "+x)
+            // console.log("z: "+z)
 
             if(x>0){
                 
@@ -206,6 +227,10 @@ export class EnemyMovement extends Component {
         return this.spriteConnection;
     }
     
+    setUpBossNode(){
+
+    }
+
 }
 
 

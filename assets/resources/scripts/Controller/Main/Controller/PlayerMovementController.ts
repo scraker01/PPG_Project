@@ -349,6 +349,10 @@ export class PlayerMovementController extends Component {
         
         this.isFacingRight = !this.isFacingRight;
     }
+
+    getSprite(){
+        return this.playerSprite;
+    }
 }
 
 

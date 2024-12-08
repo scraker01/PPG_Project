@@ -2,6 +2,7 @@ import { _decorator, CCFloat, Component, Node } from 'cc';
 import { levelStats } from '../../Etc/levelStats';
 import { sceneController } from '../../Etc/sceneController';
 import { EnemyMovement } from '../Enemy/EnemyMovement';
+import { PlayerMovementController } from './PlayerMovementController';
 const { ccclass, property } = _decorator;
 
 @ccclass('statusController')
@@ -40,7 +41,16 @@ export class statusController extends Component {
             this.node.active = false;
 
             //Node Sprite
-            this.node.getComponent(EnemyMovement).getSpriteConnection().setNodeDeactivate();
+
+            console.log(this.node);
+            // Untuk Kendali sprite Enemy
+            if(this.node.name !== "Player"){
+                this.node.getComponent(EnemyMovement).getSpriteConnection().setNodeDeactivate();
+            }else { 
+                // Untuk player
+                this.node.getComponent(PlayerMovementController).getSprite().active = false;
+                
+            }
             
             //Kurangin dari keseluruhan
             levelStats.minusEnemyAmount();
@@ -98,6 +108,9 @@ export class statusController extends Component {
         return this.delayHurtTimer;
     }
 
+    getHealth():number{
+        return this.health;
+    }
     getHealthPercentage():number{
         return this.health/this.maxHealth;
     }

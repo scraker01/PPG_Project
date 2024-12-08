@@ -63,7 +63,6 @@ export class spawnerController extends Component {
         for(let i =this.initialAmount; i<this.numberOfSpawn+this.initialAmount;i++){
 
             let enemyNode:Node = instantiate(prefab);
-            // let enemySpriteHolder:Node = instantiate(this.prefSpriteHolder);
             
             pool.push(enemyNode);
             // spawnerController.spriteHolderPool.push(enemyNode);

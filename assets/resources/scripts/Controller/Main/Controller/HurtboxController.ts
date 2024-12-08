@@ -84,7 +84,7 @@ export class HurtboxController extends Component {
         let selfEntity:string = selfNode.name.substring(0,5);
         let otherEntity:string = otherNode.name.substring(0,5);
 
-        console.log(selfEntity+" "+otherEntity)
+        // console.log(selfEntity+" "+otherEntity)
 
         if( (selfEntity==="Playe" && otherEntity==="hitbo") || (selfEntity==="enemy" && otherEntity==="hitbo") || (selfEntity==="boss-")  ){
 
@@ -141,6 +141,7 @@ export class HurtboxController extends Component {
 
 
                 let isBeingHurt = stats.getHurtCondition();
+                
                 if(!isBeingHurt){
 
                     //Kurangin darah
@@ -170,6 +171,11 @@ export class HurtboxController extends Component {
         
         // Logic for when something enters the trigger zone
     }
+
+    public getSpriteHolder():Node{
+        return this.spriteHolder;
+    }
+
 }
 
 
