@@ -30,6 +30,10 @@
       {
         "index": 7,
         "name": "bullet"
+      },
+      {
+        "index": 8,
+        "name": "non-interactable"
       }
     ],
     "collisionMatrix": {

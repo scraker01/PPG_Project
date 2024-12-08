@@ -3,7 +3,8 @@ const { ccclass, property } = _decorator;
 
 @ccclass('BulletPool')
 export class BulletPool extends Component {
-    @property({type:Prefab}) private bulletPrefab:Prefab;
+    @property({type:Prefab}) private cylinderPref:Prefab;
+    @property({type:Prefab}) private bulletItemPref:Prefab;
     @property({type:CCInteger}) private maxRange:number;
 
     private initialAmount:number;
@@ -35,7 +36,7 @@ export class BulletPool extends Component {
 
         this.bulletPool = [];
 
-        this.createPool(this.bulletPrefab, this.node, this.bulletPool);
+        this.createPool(this.cylinderPref, this.node, this.bulletPool);
 
         input.on(Input.EventType.KEY_DOWN,this.test, this);
 
@@ -43,25 +44,52 @@ export class BulletPool extends Component {
     }
 
     update(deltaTime: number) {
+        for(let node of this.bulletPool){
+            if(node.children.length == 0){
+                node.active = false;
+            }
+        }
         
+        // var jika true, maka reset position dan aktifin lagi pref
+        let isAllInactive = true;
+        
+        for(let node of this.bulletPool){
+            if(node.active == true){
+                isAllInactive = false;
+                break;
+            }
+        }
+
+        if(isAllInactive){
+            this.randomizePos();
+
+            this.scheduleOnce(()=>{
+                this.activatePrefab();
+            },5);
+
+        }
     }
 
     private createPool(prefab:Prefab, parent : Node,pool:Node[]){
         for (let i = 0 ; i< this.initialAmount; i++){
-            let bulletNode = instantiate(prefab);
+            let node = instantiate(prefab);
 
-            pool.push(bulletNode);
+            pool.push(node);
 
-            bulletNode.active = false;
+            node.active = false;
 
-            bulletNode.name = "bullet"+i;
+            node.name = "bullet"+i;
        
-            bulletNode.setParent(parent);
+            node.setParent(parent);
+
+            let bulletItem = instantiate(this.bulletItemPref);
+            bulletItem.name = "bulletItem";
+            bulletItem.setParent(node);
         }
 
     }
 
-    public randomizePost(){
+    public randomizePos(){
         let nodes = this.node.children;
     
         for(let node of nodes){
@@ -74,6 +102,8 @@ export class BulletPool extends Component {
                 let newPos = new Vec3(x,this.node.position.y,z);
     
                 node.setPosition(newPos);
+
+                node.getChildByName("bulletItem").setPosition(new Vec3(0,3,0));
             }
         }
     }
@@ -81,11 +111,17 @@ export class BulletPool extends Component {
     private activatePrefab(){
         for(let node of this.node.children){
             node.active = true;
+            this.scheduleOnce(()=>{
+
+                node.getChildByName("bulletItem").active = true;
+            },1);
+            
         }
     }
     private deactivatePrefab(){
         for(let node of this.node.children){
             node.active = false;
+            node.getChildByName("bulletItem").active = false;
         }
     }
 
@@ -107,7 +143,7 @@ export class BulletPool extends Component {
 
     test(event: EventKeyboard){
         if(event.keyCode){
-            this.randomizePost();
+            this.randomizePos();
         }
     }
 }

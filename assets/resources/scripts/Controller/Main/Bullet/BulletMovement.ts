@@ -16,15 +16,15 @@ export class BulletMovement extends Component {
 
         
     }
+
     protected update(dt: number): void {
         // console.log(this.node.getPosition().y)
     }
 
     impact(event:ICollisionEvent){
         const otherNode = event.otherCollider.node;
-        const selfNode = event.selfCollider.node;
 
-        // console.log("isDefaultTerrain "+ otherNode.name);
+        console.log("isDefaultTerrain "+ otherNode.name);
 
         
         if(otherNode.name === "Player" ){
@@ -61,11 +61,12 @@ export class BulletMovement extends Component {
 
 
         }
-
-        // this.deactivateNode();
+        
+        this.deactivateNode();
     }
 
     deactivateNode(){
+        this.node.getParent().active = false;
         this.node.active = false;
     }
 
