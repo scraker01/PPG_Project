@@ -15,6 +15,7 @@ export class CameraController extends Component {
     start() {
         this.currentCamPos = this.camera.getPosition();
         this.playerPos = this.player.getPosition();
+
         this.camToPlayerDist = new Vec3(this.playerPos.x-this.currentCamPos.x,this.playerPos.y-this.currentCamPos.y,this.playerPos.z-this.currentCamPos.z);
 
         // this.camera.setPosition(new Vec3((this.playerPos.x), this.currentCamPos.y, (this.playerPos.z-this.camToPlayerDist.z)));
@@ -27,7 +28,7 @@ export class CameraController extends Component {
         this.playerPos = this.player.getPosition();
 
 
-        this.camera.setPosition(new Vec3((this.playerPos.x), this.currentCamPos.y, (this.playerPos.z+3)));
+        this.camera.setPosition(new Vec3((this.playerPos.x), this.playerPos.y+5, (this.playerPos.z+8)));
 
     }
 }

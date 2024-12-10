@@ -6,8 +6,10 @@ export class BulletPool extends Component {
     @property({type:Prefab}) private cylinderPref:Prefab;
     @property({type:Prefab}) private bulletItemPref:Prefab;
     @property({type:CCInteger}) private maxRange:number;
+    @property({type:CCInteger}) private customTimer:number;
 
     private initialAmount:number;
+    private maxAmount:number;
 
     private bulletPool: Node[];
     private itemNodePool: Node[];
@@ -26,7 +28,7 @@ export class BulletPool extends Component {
     private zMin = -3;
     private zMax = 12;
     
-    private timer = 180;
+    private timer;
 
     start() {
         this.initialAmount = 5;
@@ -38,11 +40,16 @@ export class BulletPool extends Component {
 
         this.bulletPool = [];
 
-        this.createPool(this.cylinderPref, this.node, this.bulletPool);
+        this.initialAmount = 0;
+        this.maxAmount = 0;
+
+        this.condition(2);
+
+        
 
         input.on(Input.EventType.KEY_DOWN,this.test, this);
 
-        this.condition(1);
+        this.timer = this.customTimer*60;
     }
 
     update(deltaTime: number) {
@@ -51,6 +58,7 @@ export class BulletPool extends Component {
     }
 
     private timerCalc(){
+        console.log(this.timer)
         this.timer --;
         if(this.timer<-1){
 
@@ -64,8 +72,7 @@ export class BulletPool extends Component {
                 }
             }
 
-            console.log("inactive scheduler done")
-        
+            
             if(isAllInactive && this.timer < 0){
                 
                 // this.scheduleOnce(()=>{
@@ -80,12 +87,12 @@ export class BulletPool extends Component {
 
             }
 
-            this.timer = 180;
+            this.timer = this.customTimer*60;
         }
     }
 
     private createPool(prefab:Prefab, parent : Node,pool:Node[]){
-        for (let i = 0 ; i< this.initialAmount; i++){
+        for (let i = this.initialAmount ; i< this.maxAmount; i++){
             let node = instantiate(prefab);
 
             pool.push(node);
@@ -123,7 +130,7 @@ export class BulletPool extends Component {
                     let newPos = new Vec3(x,this.node.position.y,z);
         
                     node.setPosition(newPos);
-                    newPos.y = 5;
+                    newPos.y = 10;
                     itemNode.setPosition(newPos);
 
                 }
@@ -179,12 +186,26 @@ export class BulletPool extends Component {
 
         switch(stage) {
             case 1 :
+                this.maxAmount =5;
+                this.initialAmount = 0;
+                this.createPool(this.cylinderPref, this.node, this.bulletPool);
             break;
             case 2 :
+                this.maxAmount =10;
+                this.initialAmount = 5;
+                this.createPool(this.cylinderPref, this.node, this.bulletPool);
+                
             break;
             case 3 :
+                this.maxAmount =15;
+                this.initialAmount = 10;
+                this.createPool(this.cylinderPref, this.node, this.bulletPool);
+                
             break;
             case 4 :
+                this.maxAmount =20;
+                this.initialAmount = 15;
+                this.createPool(this.cylinderPref, this.node, this.bulletPool);
             break;
             case 5 :
             break;

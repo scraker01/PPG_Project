@@ -3,6 +3,8 @@ import { levelStats } from '../../Etc/levelStats';
 import { sceneController } from '../../Etc/sceneController';
 import { EnemyMovement } from '../Enemy/EnemyMovement';
 import { PlayerMovementController } from './PlayerMovementController';
+import { spriteController } from '../../Etc/spriteController';
+import { BossDirection } from '../Enemy/Boss/BossDirection';
 const { ccclass, property } = _decorator;
 
 @ccclass('statusController')
@@ -44,12 +46,18 @@ export class statusController extends Component {
 
             console.log(this.node);
             // Untuk Kendali sprite Enemy
-            if(this.node.name !== "Player"){
+            if(this.node.name.split("-")[0] == "enemy"){
                 this.node.getComponent(EnemyMovement).getSpriteConnection().setNodeDeactivate();
-            }else { 
+            }else if(this.node.name === "Player") { 
                 // Untuk player
                 this.node.getComponent(PlayerMovementController).getSprite().active = false;
                 
+            }else{
+                // boss
+                this.node.getComponent(BossDirection).getSpriteConnection().setNodeDeactivate();
+
+                // Khusus untuk boss, mati langsung teleport
+                levelStats.activateTeleport();
             }
             
             //Kurangin dari keseluruhan

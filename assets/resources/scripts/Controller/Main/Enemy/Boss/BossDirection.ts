@@ -58,7 +58,6 @@ export class BossDirection extends Component {
         sprite = this.spriteHolder.getChildByName(`${spriteCounter}`);
 
         let nodeWorldPos = this.node.getWorldPosition();
-        // console.log("boss node location " + nodeWorldPos);
         sprite.setWorldPosition(nodeWorldPos);
 
         this.AnimationConnection = sprite.getComponent(AnimationController);
@@ -152,16 +151,14 @@ export class BossDirection extends Component {
 
         }
 
-        console.log(this.isActivated);
+        // console.log(this.isActivated);
     }
 
     getSpriteConnection():spriteController{
         return this.spriteConnection;
     }
     
-    setUpBossNode(){
 
-    }
 
 }
 
