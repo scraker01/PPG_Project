@@ -10,6 +10,7 @@ export class BulletPool extends Component {
     private initialAmount:number;
 
     private bulletPool: Node[];
+    private itemNodePool: Node[];
     private xRange:number;
     private zRange:number;
 
@@ -25,6 +26,7 @@ export class BulletPool extends Component {
     private zMin = -3;
     private zMax = 12;
     
+    private timer = 180;
 
     start() {
         this.initialAmount = 5;
@@ -44,29 +46,41 @@ export class BulletPool extends Component {
     }
 
     update(deltaTime: number) {
-        for(let node of this.bulletPool){
-            if(node.children.length == 0){
-                node.active = false;
-            }
-        }
-        
-        // var jika true, maka reset position dan aktifin lagi pref
-        let isAllInactive = true;
-        
-        for(let node of this.bulletPool){
-            if(node.active == true){
-                isAllInactive = false;
-                break;
-            }
-        }
+        this.deactivatePrefab();
+        this.timerCalc();
+    }
 
-        if(isAllInactive){
-            this.randomizePos();
+    private timerCalc(){
+        this.timer --;
+        if(this.timer<-1){
 
-            this.scheduleOnce(()=>{
+            let isAllInactive = true;
+            
+            for(let node of this.bulletPool){
+
+                if(node.active == true){
+                    isAllInactive = false;
+                    break;
+                }
+            }
+
+            console.log("inactive scheduler done")
+        
+            if(isAllInactive && this.timer < 0){
+                
+                // this.scheduleOnce(()=>{
+                this.randomizePos();
+
+           
                 this.activatePrefab();
-            },5);
 
+                
+                // this.timer = 60;
+                // },5);
+
+            }
+
+            this.timer = 180;
         }
     }
 
@@ -78,52 +92,88 @@ export class BulletPool extends Component {
 
             node.active = false;
 
-            node.name = "bullet"+i;
+            node.name = "bullet-"+i;
        
             node.setParent(parent);
 
+            // Modifikasi agar langsung untuk item
+
             let bulletItem = instantiate(this.bulletItemPref);
-            bulletItem.name = "bulletItem";
-            bulletItem.setParent(node);
+            bulletItem.name = "bulletItem-"+i;
+            // this.itemNodePool.push(bulletItem);
+
+            bulletItem.setParent(parent);
         }
 
     }
 
     public randomizePos(){
-        let nodes = this.node.children;
-    
-        for(let node of nodes){
+        let itemNodes : Node[] = this.node.children.filter((node)=> node.name.split("-")[0] === 'bulletItem');
+        
+        // console.log(itemNodes);
+        for(let node of this.bulletPool){
 
-            if(node.active === false){
+            for(let itemNode of itemNodes){
                 
-                let x = randomRangeInt(this.xMin, this.xMax);
-                let z = randomRangeInt(this.zMin, this.zMax);
-    
-                let newPos = new Vec3(x,this.node.position.y,z);
-    
-                node.setPosition(newPos);
+                if(node.name.split("-")[1] === itemNode.name.split("-")[1] && node.active === false && itemNode.active === false ){
+                    
+                    let x = randomRangeInt(this.xMin, this.xMax);
+                    let z = randomRangeInt(this.zMin, this.zMax);
+        
+                    let newPos = new Vec3(x,this.node.position.y,z);
+        
+                    node.setPosition(newPos);
+                    newPos.y = 5;
+                    itemNode.setPosition(newPos);
 
-                node.getChildByName("bulletItem").setPosition(new Vec3(0,3,0));
+                }
             }
+
         }
     }
 
     private activatePrefab(){
-        for(let node of this.node.children){
+        for(let node of this.bulletPool){
             node.active = true;
-            this.scheduleOnce(()=>{
-
-                node.getChildByName("bulletItem").active = true;
-            },1);
             
+            let itemNodes : Node[] = this.node.children.filter((node)=> node.name.split("-")[0] === 'bulletItem');
+
+            for(let itemNode of itemNodes){
+                
+                if(node.name.split("-")[1] === itemNode.name.split("-")[1] ){
+                    
+             
+
+                    itemNode.active = true;
+   
+
+                }
+            }
         }
     }
+
     private deactivatePrefab(){
-        for(let node of this.node.children){
-            node.active = false;
-            node.getChildByName("bulletItem").active = false;
+        for(let node of this.bulletPool){
+            // node.active = true;
+            
+            let itemNodes : Node[] = this.node.children.filter((node)=> node.name.split("-")[0] === 'bulletItem');
+
+            for(let itemNode of itemNodes){
+                
+                if(node.name.split("-")[1] === itemNode.name.split("-")[1] ){
+                    
+                    if(itemNode.active == false){
+
+                        node.active = false;
+                    }
+
+   
+
+                }
+            }
         }
     }
+
 
     public condition(stage:number){
 

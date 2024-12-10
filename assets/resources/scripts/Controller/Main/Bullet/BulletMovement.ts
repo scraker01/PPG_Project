@@ -13,8 +13,6 @@ export class BulletMovement extends Component {
         this.collider = this.getComponent(SphereCollider); 
 
         this.collider.on('onCollisionEnter',this.impact, this);
-
-        
     }
 
     protected update(dt: number): void {
@@ -66,7 +64,8 @@ export class BulletMovement extends Component {
     }
 
     deactivateNode(){
-        this.node.getParent().active = false;
+        // this.node.getParent().active = false;
+       
         this.node.active = false;
     }
 

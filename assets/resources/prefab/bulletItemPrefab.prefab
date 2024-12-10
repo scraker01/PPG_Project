@@ -112,7 +112,7 @@
     },
     "_group": 128,
     "_type": 1,
-    "_mass": 10,
+    "_mass": 2,
     "_allowSleep": false,
     "_linearDamping": 0.1,
     "_angularDamping": 0.1,
@@ -243,6 +243,7 @@
       "__id__": 0
     },
     "fileId": "e96qrYNHNC5a0PwvWnPKSu",
+    "instance": null,
     "targetOverrides": null
   }
 ]
