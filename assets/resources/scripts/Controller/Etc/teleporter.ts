@@ -1,5 +1,6 @@
 import { _decorator, Component, Node } from 'cc';
 import { sceneController } from './sceneController';
+import { staticData } from './staticData';
 const { ccclass, property } = _decorator;
 
 @ccclass('teleporter')
@@ -9,7 +10,11 @@ export class teleporter extends Component {
 
      protected start(): void {
           teleporter.tpNode = this.node;
-          teleporter.tpNode.active = false;
+
+          if(staticData.level != 2){
+
+               teleporter.tpNode.active = false;
+          }
          
      }
 
@@ -25,8 +30,15 @@ export class teleporter extends Component {
           sceneController.loadScene("outro");
      }
 
-     toNextStage(name:string){
-          sceneController.loadScene(name);
+     toNextStage(){
+          let level = staticData.level;
+          
+
+          //Kalau lagi di stage 1
+          if(level === 2) sceneController.loadScene("stage2");
+          if(level === 3) sceneController.loadScene("stage3");
+          if(level === 4) sceneController.loadScene("outro");
+          
           //Implementasi
      }
 }

@@ -6,6 +6,7 @@ import { healthBarController } from '../../Etc/healthBarController';
 import { levelStats } from '../../Etc/levelStats';
 import { AnimationController } from './AnimationController';
 import { spriteController } from '../../Etc/spriteController';
+import { staticData } from '../../Etc/staticData';
 const { ccclass, property } = _decorator;
 
 @ccclass('HurtboxController')
@@ -164,7 +165,8 @@ export class HurtboxController extends Component {
 
         //Gate (buat ke stage/scene selanjutnya) 
         if(selfNode.name==="Player" && otherNode.name === "tp1"){
-            otherNode.getParent().getParent().getChildByName("tp").getChildByName("tp1").getComponent(teleporter).toOutro();
+            staticData.level+=1;
+            otherNode.getParent().getParent().getChildByName("tp").getChildByName("tp1").getComponent(teleporter).toNextStage();
             // otherNode.getComponent(Gate).makeItDisappear();
         }
 
