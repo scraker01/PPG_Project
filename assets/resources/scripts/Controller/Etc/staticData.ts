@@ -3,12 +3,18 @@ const { ccclass, property } = _decorator;
 
 @ccclass('staticData')
 export class staticData extends Component {
+    
+    public static level:number =0 ;
+    
     start() {
 
     }
 
-    update(deltaTime: number) {
-        
+    static reset(){
+        staticData.level =0;
     }
+
+
 }
-
+
+

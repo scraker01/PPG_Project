@@ -106,6 +106,19 @@ export class spawnerController extends Component {
         spawnerController.spriteHolderPool = [];
     }
 
+    remoteSpawn(){
+        this.createPool(this.prefab,this.node,spawnerController.spawnPool);
+        this.createPool(this.prefSpriteHolder,this.spriteHolder,spawnerController.spriteHolderPool);
+    }
+
+    activateSpawn(){
+        for (let node of spawnerController.spawnPool){
+            node.active = true;
+        }
+        for (let node of spawnerController.spriteHolderPool){
+            node.active = true;
+        }
+    }
 
 }
 

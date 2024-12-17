@@ -42,6 +42,10 @@ export class PlayerMovementController extends Component {
     private keysPressed: { [key: number]: boolean } = {}; // Track keys pressed
 
     onLoad() {
+        
+    }
+
+    protected start(): void {
         input.on(Input.EventType.KEY_DOWN,this.movement,this);
         input.on(Input.EventType.KEY_UP,this.releaseMovement,this);
         input.on(Input.EventType.KEY_DOWN, this.onKeyDown, this);
@@ -58,9 +62,7 @@ export class PlayerMovementController extends Component {
         this.isFacingRight = false;
         
         this.direction = new Vec3(0,0,0);
-    }
 
-    protected start(): void {
         this.rb = this.node.getComponent(RigidBody);
         this.playerSprite = this.node.getParent().getChildByName("spriteHolder").getChildByName("playerSprite");
         this.playerAnimation = this.playerSprite.getComponent(AnimationController);
