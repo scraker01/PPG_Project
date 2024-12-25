@@ -5,6 +5,7 @@ import { EnemyMovement } from '../Enemy/EnemyMovement';
 import { PlayerMovementController } from './PlayerMovementController';
 import { spriteController } from '../../Etc/spriteController';
 import { BossDirection } from '../Enemy/Boss/BossDirection';
+import { BulletPool } from '../Bullet/BulletPool';
 const { ccclass, property } = _decorator;
 
 @ccclass('statusController')
@@ -24,6 +25,7 @@ export class statusController extends Component {
     //ORIGINAL HEALTH USED FOR PERCENTAGE
     private maxHealth:number;
 
+
     start() {
 
         this.maxHealth = this.health;
@@ -31,6 +33,7 @@ export class statusController extends Component {
         this.isBeingHurt = false;
 
         this.delayHurtTimer = 1;
+
     }
 
     isDead(){
@@ -88,9 +91,28 @@ export class statusController extends Component {
         return false;
     }
 
+
     receiveDamage(dmg:number){
         if(!this.dead && !this.isBeingHurt){
             this.health-= dmg;
+
+
+            if(this.node.name === "boss-node"){
+                let prcntg = this.health/this.maxHealth;
+
+                let spawner = this.node.getParent().getParent().getChildByName("bullet-pool").getComponent(BulletPool);
+
+                if(prcntg > 0.66){
+                    spawner.condition(2);
+                    
+                }else if(prcntg > 0.33){
+                    spawner.condition(3);
+                    
+                }else{
+                    spawner.condition(4);
+                }
+
+            }
 
             this.isDead();
 

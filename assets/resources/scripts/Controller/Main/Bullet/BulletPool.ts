@@ -7,6 +7,7 @@ export class BulletPool extends Component {
     @property({type:Prefab}) private bulletItemPref:Prefab;
     @property({type:CCInteger}) private maxRange:number;
     @property({type:CCInteger}) private customTimer:number;
+    @property({type:Node}) private player;
 
     private initialAmount:number;
     private maxAmount:number;
@@ -30,6 +31,8 @@ export class BulletPool extends Component {
     
     private timer;
 
+    private bulletCondition:number;
+
     start() {
         this.initialAmount = 5;
         // Jarak ke samping ,radius (boss ke dinding samping)
@@ -43,8 +46,9 @@ export class BulletPool extends Component {
         this.initialAmount = 0;
         this.maxAmount = 0;
 
-        this.condition(2);
 
+        this.condition(1);
+        
         
 
         input.on(Input.EventType.KEY_DOWN,this.test, this);
@@ -116,7 +120,7 @@ export class BulletPool extends Component {
 
     public randomizePos(){
         let itemNodes : Node[] = this.node.children.filter((node)=> node.name.split("-")[0] === 'bulletItem');
-        
+        let playerPos = this.player.getWorldPosition();
         // console.log(itemNodes);
         for(let node of this.bulletPool){
 
@@ -124,14 +128,23 @@ export class BulletPool extends Component {
                 
                 if(node.name.split("-")[1] === itemNode.name.split("-")[1] && node.active === false && itemNode.active === false ){
                     
-                    let x = randomRangeInt(this.xMin, this.xMax);
-                    let z = randomRangeInt(this.zMin, this.zMax);
-        
+                    // let x = randomRangeInt(this.xMin, this.xMax);
+                    // let z = randomRangeInt(this.zMin, this.zMax);
+                    
+                    // let newPos = new Vec3(x,this.node.position.y,z);
+                    
+                    // node.setPosition(newPos);
+                    // newPos.y = 10;
+                    // itemNode.setPosition(newPos);
+                    
+                    let x = playerPos.x + randomRangeInt(-10,10);
+                    let z = playerPos.z + randomRangeInt(-10,10);
+                    
                     let newPos = new Vec3(x,this.node.position.y,z);
-        
-                    node.setPosition(newPos);
-                    newPos.y = 10;
-                    itemNode.setPosition(newPos);
+                    
+                    node.setWorldPosition(newPos);
+                    newPos.y  =10;
+                    itemNode.setWorldPosition(newPos);
 
                 }
             }
@@ -149,8 +162,6 @@ export class BulletPool extends Component {
                 
                 if(node.name.split("-")[1] === itemNode.name.split("-")[1] ){
                     
-             
-
                     itemNode.active = true;
    
 
@@ -184,32 +195,35 @@ export class BulletPool extends Component {
 
     public condition(stage:number){
 
-        switch(stage) {
-            case 1 :
-                this.maxAmount =5;
-                this.initialAmount = 0;
-                this.createPool(this.cylinderPref, this.node, this.bulletPool);
-            break;
-            case 2 :
-                this.maxAmount =10;
-                this.initialAmount = 5;
-                this.createPool(this.cylinderPref, this.node, this.bulletPool);
+        if(this.bulletCondition !== stage || this.bulletCondition == null){
+            switch(stage) {
+                case 1 :
+                    this.maxAmount =5;
+                    this.initialAmount = 0;
+                    this.createPool(this.cylinderPref, this.node, this.bulletPool);
+                break;
+                case 2 :
+                    this.maxAmount =10;
+                    this.initialAmount = 5;
+                    this.createPool(this.cylinderPref, this.node, this.bulletPool);
+                    
+                break;
+                case 3 :
+                    this.maxAmount =15;
+                    this.initialAmount = 10;
+                    this.createPool(this.cylinderPref, this.node, this.bulletPool);
+                    
+                break;
+                case 4 :
+                    this.maxAmount =20;
+                    this.initialAmount = 15;
+                    this.createPool(this.cylinderPref, this.node, this.bulletPool);
+                break;
                 
-            break;
-            case 3 :
-                this.maxAmount =15;
-                this.initialAmount = 10;
-                this.createPool(this.cylinderPref, this.node, this.bulletPool);
-                
-            break;
-            case 4 :
-                this.maxAmount =20;
-                this.initialAmount = 15;
-                this.createPool(this.cylinderPref, this.node, this.bulletPool);
-            break;
-            case 5 :
-            break;
+            }
+
         }
+        this.bulletCondition = stage;
     }
 
     test(event: EventKeyboard){

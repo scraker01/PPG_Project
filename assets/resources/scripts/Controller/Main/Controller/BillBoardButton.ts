@@ -12,7 +12,7 @@ export class BillBoardButton extends Component {
     private saveAndLoadNode:Node|null;
 
     protected start(): void {
-
+        this.bb.active = false;
         input.on(Input.EventType.KEY_DOWN,this.open,this);
         
     }
@@ -25,8 +25,8 @@ export class BillBoardButton extends Component {
                 
                 input.on(Input.EventType.KEY_DOWN,this.menuService,this);
                 
-                this.saveAndLoadNode.getComponent(saveAndLoad).switch();
-                alert("you can now save and load");
+                // this.saveAndLoadNode.getComponent(saveAndLoad).switch();
+                // alert("you can now save and load");
                 
                 director.pause();
                 break;
@@ -39,8 +39,8 @@ export class BillBoardButton extends Component {
                     this.bb.active =false;
                     input.off(Input.EventType.KEY_DOWN,this.menuService,this);
                     input.on(Input.EventType.KEY_DOWN,this.open,this);
-                    this.saveAndLoadNode.getComponent(saveAndLoad).switch();
-                    alert("save and load is now disable");
+                    // this.saveAndLoadNode.getComponent(saveAndLoad).switch();
+                    // alert("save and load is now disable");
 
                     director.resume();
                 break;

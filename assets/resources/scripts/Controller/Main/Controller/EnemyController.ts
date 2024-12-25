@@ -50,9 +50,12 @@ export class EnemyController extends Component {
             this.canAttack=false;
             
             
-            for(let curHbx=0;curHbx < hitboxes.length;curHbx++ ){
-                let hitbox = hitboxes[curHbx];
-                hitbox.getComponent(HitboxController).activateHitbox();
+            for(let hb of hitboxes){
+                if(hb.name.includes("hitbox",0)){
+                    console.log(true)
+                    hb.getComponent(HitboxController).activateHitbox();
+                    
+                }
             }
             
         }

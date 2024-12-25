@@ -1,4 +1,4 @@
-import { _decorator, Component, lerp, Node, RigidBody, Vec3,PhysicsSystem, randomRangeInt, misc} from 'cc';
+import { _decorator, Component, lerp, Node, RigidBody, Vec3, misc, Animation} from 'cc';
 const { ccclass, property } = _decorator;
 import { EnemyController } from '../Controller/EnemyController';
 import { levelStats } from '../../Etc/levelStats';
@@ -23,6 +23,7 @@ export class EnemyMovement extends Component {
     //Untuk Animasi
     private AnimationConnection:AnimationController|null;
     private spriteConnection:spriteController|null;
+    private effectRenderAnimation:Animation;
 
 
 
@@ -38,6 +39,8 @@ export class EnemyMovement extends Component {
         // this.walkPointSet = true;
 
         this.isSpriteConnected = false;
+
+        this.effectRenderAnimation = this.node.getChildByName("hitboxNode").getChildByName("effectRender").getComponent(Animation);
         
 
     }
@@ -202,7 +205,9 @@ export class EnemyMovement extends Component {
 
                     //Serang
                     enemyCon.attack();
-
+                    
+                    //Mainkan animasi
+                    this.effectRenderAnimation.play("enemyAttack");
 
                 }
 

@@ -26,20 +26,17 @@ export class teleporter extends Component {
      }
 
      toOutro(){
-     //    director.loadScene("outro");
           sceneController.loadScene("outro");
      }
 
      toNextStage(){
           let level = staticData.level;
           
-
-          //Kalau lagi di stage 1
           if(level === 2) sceneController.loadScene("stage2");
           if(level === 3) sceneController.loadScene("stage3");
           if(level === 4) sceneController.loadScene("outro");
           
-          //Implementasi
+          // sceneController.loadScene("stageLoader");
      }
 }
 

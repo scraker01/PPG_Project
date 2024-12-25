@@ -1,5 +1,6 @@
 import { _decorator, CCFloat, Component, EventKeyboard, Input, input, KeyCode, lerp, Node,Animation, RigidBody, Vec3, Quat, SystemEvent, systemEvent } from 'cc';
 import { AnimationController } from './AnimationController';
+import { HitboxController } from './HitboxController';
 const { ccclass, property } = _decorator;
 
 //Import component local
@@ -31,11 +32,16 @@ export class PlayerMovementController extends Component {
     //Aninmation Variables
     private playerSprite:Node;
     private playerAnimation:AnimationController;
+    private effectRenderAnimation:Animation;
     
     
     //Others
     private isFacingRight:boolean;
     private scale;
+    private hitboxes:Node[];
+
+    private canAttack:boolean;
+    private timingAttack:number;
 
     private rotationSpeed: number = 600; // Rotation speed in degrees per second
     private currentRotation: Vec3 = new Vec3(); // Player's current rotation
@@ -50,6 +56,9 @@ export class PlayerMovementController extends Component {
         input.on(Input.EventType.KEY_UP,this.releaseMovement,this);
         input.on(Input.EventType.KEY_DOWN, this.onKeyDown, this);
         input.on(Input.EventType.KEY_UP, this.onKeyUp, this);
+        
+        //spesifikin untuk attack test
+        input.on(Input.EventType.KEY_DOWN, this.attack, this);
     
         this.xRotation=0;
         this.zRotation=0;
@@ -66,6 +75,15 @@ export class PlayerMovementController extends Component {
         this.rb = this.node.getComponent(RigidBody);
         this.playerSprite = this.node.getParent().getChildByName("spriteHolder").getChildByName("playerSprite");
         this.playerAnimation = this.playerSprite.getComponent(AnimationController);
+        
+        this.effectRenderAnimation = this.node.getChildByName("hitboxNode").getChildByName("effectRender").getComponent(Animation);
+        
+        this.hitboxes = this.node.getChildByName("hitboxNode").children;
+
+        // Attack
+        this.canAttack= true;
+        this.timingAttack = 1;
+
         
         // this.objectAnimation = this.getComponent(Animation);
         this.rb.useCCD = true;
@@ -84,14 +102,7 @@ export class PlayerMovementController extends Component {
         this.xSpeed = this.speed*this.xRotation;
         this.zSpeed = this.speed*this.zRotation;
 
-        // let currVelocity = new Vec3(0,0,0);
-        // this.rb.getLinearVelocity(currVelocity);
 
-        // let curXSpeed =currVelocity.x;
-        // let curZSpeed =currVelocity.z;
-
-        // let newXSpeed = lerp(curXSpeed, this.xSpeed, this.accel*deltaTime);
-        // let newZSpeed = lerp(curZSpeed, this.xSpeed, this.accel*deltaTime);
         //Algoritma Moving
         if(this.checkIsMoving()){
             
@@ -117,44 +128,11 @@ export class PlayerMovementController extends Component {
                                                     this.rb.linearFactor.y,
                                                 lerp(this.zSpeed,0,this.speed*deltaTime)));
 
-            // let stopXSpeed = lerp(curXSpeed, 0, this.accel*deltaTime);
-            // let stopZSpeed = lerp(curZSpeed, 0, this.accel*deltaTime);
-
-            // this.rb.setLinearVelocity(new Vec3(
-            //     stopXSpeed,
-            //     currVelocity.y,
-            //     stopZSpeed
-            // ));
 
             this.playerAnimation.playAnimation("idle");
         }
 
-        // console.log(currVelocity)
- /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        // let normalizeDirection = this.direction.normalize();
-        // if(normalizeDirection.x>0){
-        //     normalizeDirection.x = Math.min(normalizeDirection.x+this.accel,this.speed);
-        // }else if (normalizeDirection.x <0){
-        //     normalizeDirection.x = Math.max(normalizeDirection.x-this.accel,-this.speed);
-            
-        // }
-
-        // if(normalizeDirection.z>0){
-        //     normalizeDirection.z = Math.min(normalizeDirection.z+this.accel,this.speed);
-        // }else if (normalizeDirection.z <0){
-        //     normalizeDirection.z = Math.max(normalizeDirection.x-this.accel,-this.speed);
-            
-        // }
-        
-        // let velocity = new Vec3(
-        //     normalizeDirection.x * this.speed,
-        //     0,
-        //     normalizeDirection.z * this.speed
-        // )
-
-        // this.rb.setLinearVelocity(velocity);
-
-
+   
         //Check Lagi bergerak di-x atau ga
         this.checkIsMovingXDimension();
 
@@ -244,6 +222,33 @@ export class PlayerMovementController extends Component {
     onKeyUp(event: EventKeyboard) {
         // Mark the key as released
         this.keysPressed[event.keyCode] = false;
+    }
+
+    attack(event: EventKeyboard){
+        switch(event.keyCode){
+            case KeyCode.KEY_J:
+                console.log(this.canAttack);
+
+                if(this.canAttack){
+                    
+                    this.canAttack = false;
+                    for(let hb of this.hitboxes){
+                        if(hb.name.includes("hitbox",0)){
+                            // console.log(true)
+                            hb.getComponent(HitboxController).activateHitbox();
+                            
+                        }
+                    }
+                    this.effectRenderAnimation.play("playerAttack");
+                    
+                    
+                    this.scheduleOnce(()=>{
+                        this.canAttack = true;
+                    },this.timingAttack);
+                }
+
+                break;
+        }
     }
 
     movement(event: EventKeyboard){

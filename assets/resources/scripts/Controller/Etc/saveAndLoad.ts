@@ -21,29 +21,33 @@ export class saveAndLoad extends Component {
     switch(){
         if(this.isActive){
             // dari on ke off
-            input.off(Input.EventType.KEY_DOWN,this.saveAndLoad,this);
+            // input.off(Input.EventType.KEY_DOWN,this.saveAndLoad,this);
         }else{
             //dari off ke on
-            input.on(Input.EventType.KEY_DOWN,this.saveAndLoad,this);
+            // input.on(Input.EventType.KEY_DOWN,this.saveAndLoad,this);
 
         }
         this.isActive = !this.isActive;
     }
 
-    saveAndLoad(event:EventKeyboard){
-        switch(event.keyCode){
-            case KeyCode.KEY_J:
-                this.save();
-                break;
-            // case KeyCode.PAGE_UP:
-            //     this.load();
-            //     break;
-            case KeyCode.KEY_Q:
-                staticData.reset();
-                director.resume();
-                sceneController.loadScene("intro");
-                break;
-        }
+    // saveAndLoad(event:EventKeyboard){
+    //     switch(event.keyCode){
+    //         case KeyCode.KEY_J:
+    //             this.save();
+    //             break;
+    //         // case KeyCode.PAGE_UP:
+    //         //     this.load();
+    //         //     break;
+    //         case KeyCode.KEY_Q:
+                
+    //             break;
+    //     }
+    // }
+
+    private quit(){
+        staticData.reset();
+        director.resume();
+        sceneController.loadScene("intro");
     }
 
     private save(){
