@@ -29,10 +29,10 @@ export class storyView extends Component {
         if(this.timerExecution<0){
             this.timerExecution = this.originalTimer;
             
-            // console.log(this.pageView.getPages().length);
-            if(this.pageView.curPageIdx < this.pageView.getPages().length){
-                let page =this.pageView.curPageIdx;
-                this.pageView.setCurrentPageIndex(page+1);
+            let nextPage =this.pageView.curPageIdx+1;
+            
+            if(nextPage < this.pageView.getPages().length){
+                this.pageView.setCurrentPageIndex(nextPage);
 
             }else{
                 this.closeStoryView();
