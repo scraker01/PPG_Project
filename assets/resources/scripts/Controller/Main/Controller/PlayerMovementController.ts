@@ -41,6 +41,7 @@ export class PlayerMovementController extends Component {
     private hitboxes:Node[];
 
     private canAttack:boolean;
+    private isAttacking:boolean;
     private timingAttack:number;
 
     private rotationSpeed: number = 600; // Rotation speed in degrees per second
@@ -83,7 +84,7 @@ export class PlayerMovementController extends Component {
         // Attack
         this.canAttack= true;
         this.timingAttack = 1;
-
+        this.isAttacking = false;
         
         // this.objectAnimation = this.getComponent(Animation);
         this.rb.useCCD = true;
@@ -117,10 +118,10 @@ export class PlayerMovementController extends Component {
             // ));
 
             if(this.zSpeed<0){
-                this.playerAnimation.playAnimation("forward");
+                this.playerAnimation.playAnimation("walking-back"); 
             }
             else if(Math.abs(this.xSpeed)>0 || this.zSpeed > 0){
-                this.playerAnimation.playAnimation("sideways-walk"); 
+                this.playerAnimation.playAnimation("walking-front");
             }
         }  
         else{
@@ -128,8 +129,19 @@ export class PlayerMovementController extends Component {
                                                     this.rb.linearFactor.y,
                                                 lerp(this.zSpeed,0,this.speed*deltaTime)));
 
+            if(!this.isAttacking){
+                console.log(this.isAttacking);
 
-            this.playerAnimation.playAnimation("idle");
+                if(this.zRotation<=0){
+    
+                    this.playerAnimation.playAnimation("standing-front");
+                }else{
+                    this.playerAnimation.playAnimation("standing-back");
+    
+                }
+
+            }
+            // this.playerAnimation.playAnimation("idle");
         }
 
    
@@ -230,7 +242,7 @@ export class PlayerMovementController extends Component {
                 console.log(this.canAttack);
 
                 if(this.canAttack){
-                    
+                    this.isAttacking = true;
                     this.canAttack = false;
                     for(let hb of this.hitboxes){
                         if(hb.name.includes("hitbox",0)){
@@ -239,10 +251,20 @@ export class PlayerMovementController extends Component {
                             
                         }
                     }
-                    this.effectRenderAnimation.play("playerAttack");
                     
+                    this.playerAnimation.setLock(true);
+                    if(this.zRotation<=0){
+                        this.playerAnimation.playAnimation("attack-front");
+                    }else{
+                        this.playerAnimation.playAnimation("attack-back");
+                        
+                    }
+                    // this.effectRenderAnimation.play("playerAttack");
+                    // console.log(this.isAttacking);
                     
                     this.scheduleOnce(()=>{
+                        this.playerAnimation.setLock(false);
+                        this.isAttacking = false;
                         this.canAttack = true;
                     },this.timingAttack);
                 }
