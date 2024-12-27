@@ -215,11 +215,11 @@ export class EnemyMovement extends Component {
         let canAttack = enemyCon.getCanAttack();
         let timing = enemyCon.getTiming();
 
-        console.log("timing: "+timing);
+        // console.log("timing: "+timing);
         //Pakai timing (delay) supaya tidak langsung serang (ada cooldown / chargenya)
         if(canAttack && timing < 0){
             
-            console.log("is attacking");
+            // console.log("is attacking");
             //Set animasi serangan ke depan
             if(this.spriteConnection.getFacingFront()){
                 this.scheduleOnce(()=>{

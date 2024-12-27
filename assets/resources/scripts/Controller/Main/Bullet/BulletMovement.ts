@@ -1,4 +1,4 @@
-import { _decorator, Component, ICollisionEvent, Node, SphereCollider } from 'cc';
+import { _decorator, Component, ICollisionEvent, Node, randomRangeInt, SphereCollider, Vec3 } from 'cc';
 import { healthBarController } from '../../Etc/healthBarController';
 import { statusController } from '../Controller/statusController';
 import { HurtboxController } from '../Controller/HurtboxController';
@@ -8,15 +8,26 @@ const { ccclass, property } = _decorator;
 export class BulletMovement extends Component {
 
     private collider : SphereCollider;
+    private vec : Vec3;
 
     protected start(): void {
         this.collider = this.getComponent(SphereCollider); 
 
         this.collider.on('onCollisionEnter',this.impact, this);
+        this.vec = new Vec3(0,0,0);
     }
 
     protected update(dt: number): void {
-        // console.log(this.node.getPosition().y)
+        this.vec = new Vec3(
+            this.vec.x+randomRangeInt(0,10),
+            this.vec.y+randomRangeInt(0,10),
+            this.vec.z+randomRangeInt(0,10)
+
+        );
+
+        this.node.setRotationFromEuler(
+            this.vec
+        );
     }
 
     impact(event:ICollisionEvent){

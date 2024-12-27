@@ -1,4 +1,6 @@
 import { _decorator, CCInteger, Component, EventKeyboard, Input, input, instantiate, Node, Prefab, randomRangeInt, Vec3 } from 'cc';
+import { BossDirection } from '../Enemy/Boss/BossDirection';
+import { AnimationController } from '../Controller/AnimationController';
 const { ccclass, property } = _decorator;
 
 @ccclass('BulletPool')
@@ -8,6 +10,7 @@ export class BulletPool extends Component {
     @property({type:CCInteger}) private maxRange:number;
     @property({type:CCInteger}) private customTimer:number;
     @property({type:Node}) private player;
+    @property({type:Node}) private boss;
 
     private initialAmount:number;
     private maxAmount:number;
@@ -33,6 +36,11 @@ export class BulletPool extends Component {
 
     private bulletCondition:number;
 
+    // Buat notify animasi boss, ya gini dulu aja
+    private bossDirectionComp:BossDirection;
+    private animComp:AnimationController;
+    private durationAttack:number;
+
     start() {
         this.initialAmount = 5;
         // Jarak ke samping ,radius (boss ke dinding samping)
@@ -49,22 +57,30 @@ export class BulletPool extends Component {
 
         this.condition(1);
         
-        
-
-        input.on(Input.EventType.KEY_DOWN,this.test, this);
-
         this.timer = this.customTimer*60;
+
+        this.bossDirectionComp = this.boss.getComponent(BossDirection);
+        // console.log(this.bossDirectionComp.getAnimationCon());
+        // this.durationAttack = this.bossDirectionComp.getAnimationCon().getClipByName("attack").duration;
     }
 
     update(deltaTime: number) {
+        // paksa update sampe dapet durasi
+        if(!this.animComp){
+            
+            this.animComp = this.bossDirectionComp.getAnimationCon();
+            this.durationAttack = this.bossDirectionComp.getAnimationCon().getClipByName("attack").duration;
+        }
         this.deactivatePrefab();
         this.timerCalc();
     }
 
     private timerCalc(){
-        console.log(this.timer)
+        // console.log(this.timer)
         this.timer --;
         if(this.timer<-1){
+            // UNTUK BOSSSSSSSSSSSS
+            this.bossDirectionComp.playAttackAnimation("attack");
 
             let isAllInactive = true;
             
@@ -78,21 +94,18 @@ export class BulletPool extends Component {
 
             
             if(isAllInactive && this.timer < 0){
-                
-                // this.scheduleOnce(()=>{
                 this.randomizePos();
-
-           
                 this.activatePrefab();
-
-                
-                // this.timer = 60;
-                // },5);
 
             }
 
+
             this.timer = this.customTimer*60;
+            this.scheduleOnce(()=>{
+                this.bossDirectionComp.playAttackAnimation("idle");
+            },this.durationAttack);
         }
+        
     }
 
     private createPool(prefab:Prefab, parent : Node,pool:Node[]){
@@ -226,11 +239,11 @@ export class BulletPool extends Component {
         this.bulletCondition = stage;
     }
 
-    test(event: EventKeyboard){
-        if(event.keyCode){
-            this.randomizePos();
-        }
+    notifyBossAnimation(){
+
     }
+    
+
 }
 
 

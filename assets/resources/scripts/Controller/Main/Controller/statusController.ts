@@ -98,6 +98,7 @@ export class statusController extends Component {
 
 
             if(this.node.name === "boss-node"){
+                this.node.getComponent(BossDirection).getAnimationCon().playAnimation("hurt");
                 let prcntg = this.health/this.maxHealth;
 
                 let spawner = this.node.getParent().getParent().getChildByName("bullet-pool").getComponent(BulletPool);

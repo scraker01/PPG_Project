@@ -138,18 +138,16 @@ export class BossDirection extends Component {
                     this.spriteConnection.setFacingFront();
                 }
             }
-
-
-
             
-            
+
         } 
         //Kondisi Aktivasi boss 
         if(!this.isActivated && directionLength < this.activationRange ){
-
+            
             this.isActivated = true;
-
+            
         }
+        // this.AnimationConnection.playAnimation("idle");
 
         // console.log(this.isActivated);
     }
@@ -159,7 +157,13 @@ export class BossDirection extends Component {
     }
     
 
+    playAttackAnimation(clipname:string){
+        this.AnimationConnection.playAnimation(clipname);
+    }
 
+    getAnimationCon():AnimationController{
+        return this.AnimationConnection;
+    }
 }
 
 
