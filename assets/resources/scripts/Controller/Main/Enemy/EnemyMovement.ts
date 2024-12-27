@@ -24,6 +24,7 @@ export class EnemyMovement extends Component {
     private AnimationConnection:AnimationController|null;
     private spriteConnection:spriteController|null;
     private effectRenderAnimation:Animation;
+    private attackDuration:number;
 
 
 
@@ -42,6 +43,15 @@ export class EnemyMovement extends Component {
 
         this.effectRenderAnimation = this.node.getChildByName("hitboxNode").getChildByName("effectRender").getComponent(Animation);
         
+        if(this.attackDuration==0){
+    
+            this.effectRenderAnimation.clips.forEach((clip)=>{
+                if(clip.name === "enemyAttack"){
+                    this.attackDuration = clip.duration;
+                }
+            });
+        
+        }
 
     }
     
@@ -76,24 +86,23 @@ export class EnemyMovement extends Component {
 
         }
 
-        
-            let enemyCounter = "enemy-dummy"+i;
-            let spriteCounter = "enemySprite"+i;
+            // let enemyCounter = "enemy-dummy"+i;
+            // let spriteCounter = "enemySprite"+i;
+            // if(this.node.name === enemyCounter){
+            //     sprite = this.spriteHolder.getChildByName(`${spriteCounter}`);
 
-            if(this.node.name === enemyCounter){
-                sprite = this.spriteHolder.getChildByName(`${spriteCounter}`);
+            //     let nodeWorldPos = this.node.getWorldPosition();
+            //     sprite.setWorldPosition(nodeWorldPos);
 
-                let nodeWorldPos = this.node.getWorldPosition();
-                sprite.setWorldPosition(nodeWorldPos);
+            //     //Konek sprite untuk pertama kalinya
+            //     if(!this.isSpriteConnected){
+            //         this.isSpriteConnected= true;
 
-                //Konek sprite untuk pertama kalinya
-                if(!this.isSpriteConnected){
-                    this.isSpriteConnected= true;
+            //         this.AnimationConnection = sprite.getComponent(AnimationController);
+            //         this.spriteConnection = sprite.getComponent(spriteController);
+            //     }
+            // }
 
-                    this.AnimationConnection = sprite.getComponent(AnimationController);
-                    this.spriteConnection = sprite.getComponent(spriteController);
-                }
-            }
 
         
 
@@ -148,14 +157,13 @@ export class EnemyMovement extends Component {
             let z = direction.z;
 
             /*
+
             Z < 0 ke belakang
-            Z > 0 ke depan
+            Z > 0 ke depan          Hadap ke kamera
 
             X < 0 ke kiri
             X > 0 ke kanan
             */
-            // console.log("x: "+x)
-            // console.log("z: "+z)
 
             if(x>0){
                 
@@ -195,11 +203,18 @@ export class EnemyMovement extends Component {
 
                     //Set animasi serangan ke depan
                     if(this.spriteConnection.getFacingFront()){
-                        this.AnimationConnection.playAnimation("attackFront");
+                        this.scheduleOnce(()=>{
+                            this.AnimationConnection.playAnimation("attackFront");
+
+                        },this.attackDuration);
                     }
                     //Set animasi serangan ke belakang
                     else{
-                        this.AnimationConnection.playAnimation("attackBack");
+
+                        this.scheduleOnce(()=>{
+
+                            this.AnimationConnection.playAnimation("attackBack");
+                        },this.attackDuration);
 
                     }
 

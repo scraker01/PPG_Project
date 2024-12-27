@@ -1,4 +1,4 @@
-import { _decorator, CCFloat, Component, EventKeyboard, Input, input, KeyCode, lerp, Node,Animation, RigidBody, Vec3, Quat, SystemEvent, systemEvent } from 'cc';
+import { _decorator, CCFloat, Component, EventKeyboard, Input, input, KeyCode, lerp, Node,Animation, RigidBody, Vec3, Quat, SystemEvent, systemEvent, AnimationClip } from 'cc';
 import { AnimationController } from './AnimationController';
 import { HitboxController } from './HitboxController';
 const { ccclass, property } = _decorator;
@@ -33,6 +33,7 @@ export class PlayerMovementController extends Component {
     private playerSprite:Node;
     private playerAnimation:AnimationController;
     private effectRenderAnimation:Animation;
+    private attackDuration:number;
     
     
     //Others
@@ -85,6 +86,7 @@ export class PlayerMovementController extends Component {
         this.canAttack= true;
         this.timingAttack = 1;
         this.isAttacking = false;
+        this.attackDuration=0;
         
         // this.objectAnimation = this.getComponent(Animation);
         this.rb.useCCD = true;
@@ -130,7 +132,7 @@ export class PlayerMovementController extends Component {
                                                 lerp(this.zSpeed,0,this.speed*deltaTime)));
 
             if(!this.isAttacking){
-                console.log(this.isAttacking);
+                // console.log(this.isAttacking);
 
                 if(this.zRotation<=0){
     
@@ -141,7 +143,7 @@ export class PlayerMovementController extends Component {
                 }
 
             }
-            // this.playerAnimation.playAnimation("idle");
+            this.playerAnimation.playAnimation("idle");
         }
 
    
@@ -237,9 +239,19 @@ export class PlayerMovementController extends Component {
     }
 
     attack(event: EventKeyboard){
+        if(this.attackDuration==0){
+    
+            this.effectRenderAnimation.clips.forEach((clip)=>{
+                if(clip.name === "enemyAttack"){
+                    this.attackDuration = clip.duration;
+                }
+            });
+        
+        }
+
         switch(event.keyCode){
             case KeyCode.KEY_J:
-                console.log(this.canAttack);
+                // console.log(this.canAttack);
 
                 if(this.canAttack){
                     this.isAttacking = true;
@@ -252,16 +264,20 @@ export class PlayerMovementController extends Component {
                         }
                     }
                     
-                    this.playerAnimation.setLock(true);
-                    if(this.zRotation<=0){
-                        this.playerAnimation.playAnimation("attack-front");
-                    }else{
+                    if(this.zRotation<0){
                         this.playerAnimation.playAnimation("attack-back");
-                        
+                    }else{
+                        this.playerAnimation.playAnimation("attack-front");
                     }
-                    // this.effectRenderAnimation.play("playerAttack");
-                    // console.log(this.isAttacking);
+                
+                    this.playerAnimation.setLock(true);
+
+                    // Jalanin animasi ketika
+                    this.scheduleOnce(()=>{
+                        this.effectRenderAnimation.play("enemyAttack");
+                    },this.attackDuration);
                     
+                    // Reset
                     this.scheduleOnce(()=>{
                         this.playerAnimation.setLock(false);
                         this.isAttacking = false;

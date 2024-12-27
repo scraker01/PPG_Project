@@ -24,7 +24,7 @@ export class SpawnerDetection extends Component {
 
         let z = this.playerWorldPos.z-this.spawnerWorldPos.z;
         
-        console.log(!this.isActivated && z<0)
+        // console.log(!this.isActivated && z<0)
         if(!this.isActivated && z<0){
             // this.spawnerController.remoteSpawn();
             this.spawnerController.activateSpawn();

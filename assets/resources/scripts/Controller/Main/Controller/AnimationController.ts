@@ -1,4 +1,4 @@
-import { _decorator, Component, Node ,Animation} from 'cc';
+import { _decorator, Component, Node ,Animation, AnimationClip} from 'cc';
 const { ccclass, property } = _decorator;
 
 @ccclass('AnimationController')
@@ -37,6 +37,20 @@ export class AnimationController extends Component {
 
     setLock(status:boolean){
         this.isLock = status;
+    }
+
+    getObjectAnimation():Animation{
+        return this.objectAnimation;
+    }
+
+    getClipByName(clipname:string):AnimationClip{
+        for(let clip of this.objectAnimation.clips){
+            console.log(clip);
+            if(clip.name === clipname){
+
+                return clip;
+            }
+        } 
     }
 }
 
