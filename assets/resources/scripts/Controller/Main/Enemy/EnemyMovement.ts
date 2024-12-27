@@ -192,40 +192,7 @@ export class EnemyMovement extends Component {
 
             //Di dalam jarak serangan
             if(directionLength < this.closestWalkRange+0.5){
-
-                let enemyCon : EnemyController = this.getComponent(EnemyController);
-                let canAttack = enemyCon.getCanAttack();
-                let timing = enemyCon.getTiming();
-
-
-                //Pakai timing (delay) supaya tidak langsung serang (ada cooldown / chargenya)
-                if(canAttack && timing === 0){
-
-                    //Set animasi serangan ke depan
-                    if(this.spriteConnection.getFacingFront()){
-                        this.scheduleOnce(()=>{
-                            this.AnimationConnection.playAnimation("attackFront");
-
-                        },this.attackDuration);
-                    }
-                    //Set animasi serangan ke belakang
-                    else{
-
-                        this.scheduleOnce(()=>{
-
-                            this.AnimationConnection.playAnimation("attackBack");
-                        },this.attackDuration);
-
-                    }
-
-                    //Serang
-                    enemyCon.attack();
-                    
-                    //Mainkan animasi
-                    this.effectRenderAnimation.play("enemyAttack");
-
-                }
-
+                this.handleAttack();
             }
             //Di luar jarak
             else{
@@ -241,6 +208,45 @@ export class EnemyMovement extends Component {
                         
         } 
 
+    }
+
+    private handleAttack(){
+        let enemyCon : EnemyController = this.getComponent(EnemyController);
+        let canAttack = enemyCon.getCanAttack();
+        let timing = enemyCon.getTiming();
+
+        console.log("timing: "+timing);
+        //Pakai timing (delay) supaya tidak langsung serang (ada cooldown / chargenya)
+        if(canAttack && timing < 0){
+            
+            console.log("is attacking");
+            //Set animasi serangan ke depan
+            if(this.spriteConnection.getFacingFront()){
+                this.scheduleOnce(()=>{
+                    this.AnimationConnection.playAnimation("attackFront");
+
+                },this.attackDuration);
+            }
+            //Set animasi serangan ke belakang
+            else{
+
+                this.scheduleOnce(()=>{
+
+                    this.AnimationConnection.playAnimation("attackBack");
+                },this.attackDuration);
+
+            }
+
+            //Serang
+            enemyCon.attack();
+            
+            // reset timing
+            enemyCon.resetTiming();
+
+            //Mainkan animasi
+            this.effectRenderAnimation.play("enemyAttack");
+
+        }
     }
 
     getSpriteConnection():spriteController{

@@ -213,7 +213,7 @@ export class PlayerMovementController extends Component {
             this.rotateInstantly(desiredRotation);
         }
         
-        // console.log(this.keysPressed)
+
     }
 
     private checkKeysPressed():boolean{

@@ -23,7 +23,7 @@ export class EnemyController extends Component {
         this.attackDelay = 2;
         this.canAttack = true;
 
-        //Attack Timing per 60
+        //Attack Timing per 60 (1 sekon)
         this.fixedT = 60;
         
         this.timing= this.fixedT;
@@ -67,8 +67,9 @@ export class EnemyController extends Component {
         
     }
     
+    // random dari 0 - 0.5 detik
     private generateVariableT():number{
-        return randomRangeInt(30,60);
+        return randomRangeInt(0,30);
     }
 
     public getCanAttack():boolean{
@@ -79,12 +80,15 @@ export class EnemyController extends Component {
         return this.timing;
     }
 
-    protected update(dt: number): void {
-        if(this.timing<0){
-            this.timing = this.fixedT + this.generateVariableT();
-        }
-        this.timing--;
+    public resetTiming(){
+        this.timing = this.fixedT + this.generateVariableT();
     }
+
+    protected update(dt: number): void {
+        this.timing-=1;
+    }
+
+
 
 
 
