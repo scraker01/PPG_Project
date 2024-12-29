@@ -822,7 +822,7 @@
     "__prefab": {
       "__id__": 39
     },
-    "playOnLoad": true,
+    "playOnLoad": false,
     "_clips": [
       {
         "__uuid__": "d72a4988-863f-464f-8e3c-81c77535c06f",
@@ -833,10 +833,7 @@
         "__expectedType__": "cc.AnimationClip"
       }
     ],
-    "_defaultClip": {
-      "__uuid__": "d72a4988-863f-464f-8e3c-81c77535c06f",
-      "__expectedType__": "cc.AnimationClip"
-    },
+    "_defaultClip": null,
     "_id": ""
   },
   {

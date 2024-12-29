@@ -1,4 +1,4 @@
-import { _decorator, BoxCollider, CapsuleCollider, Collider, Component, ICollisionEvent, ITriggerEvent, Node, RigidBody } from 'cc';
+import { _decorator, BoxCollider, CapsuleCollider, Collider, Component, ICollisionEvent, ITriggerEvent, Node, randomRangeInt, RigidBody } from 'cc';
 import { EnemyController } from './EnemyController';
 import { teleporter } from '../../Etc/teleporter';
 import { statusController } from './statusController';
@@ -7,6 +7,7 @@ import { levelStats } from '../../Etc/levelStats';
 import { AnimationController } from './AnimationController';
 import { spriteController } from '../../Etc/spriteController';
 import { staticData } from '../../Etc/staticData';
+import { AudioManager } from '../../Etc/AudioManager';
 const { ccclass, property } = _decorator;
 
 @ccclass('HurtboxController')
@@ -19,7 +20,7 @@ export class HurtboxController extends Component {
 
     private rb: RigidBody;
 
-    
+    private audioManager:AudioManager;
 
     start() {
         // this.hitboxActive = this.node.active;
@@ -38,22 +39,33 @@ export class HurtboxController extends Component {
         //Sprite Holder kalau dia player
         if(this.node.name === "Player"){
             this.spriteHolder = this.node.getParent().getChildByName("spriteHolder");
+            this.audioManager = this.node.getParent().  //dari player ke world
+                                        getParent().
+                                        getChildByName("Components").
+                                        getChildByName("AudioManager").
+                                        getComponent(AudioManager);
             
         }else{ //Sprite Holder kalau enemy
             this.spriteHolder = this.node.getParent().getParent().getChildByName("spriteHolder");
+            
+            this.audioManager = this.node.getParent().  // dari enemy-dummy ke enemies
+                                        getParent().    // baru ke world
+                                        getParent().
+                                        getChildByName("Components").
+                                        getChildByName("AudioManager").
+                                        getComponent(AudioManager);
             // console.log(this.spriteHolder.children)
         }
+        
+        
     }
+
 
    onCollisionEnter(event: ICollisionEvent) {
         // Handle collision response
 
         const otherNode = event.otherCollider.node;
         const selfNode = event.selfCollider.node;
-
-        // console.log('Trigger Enter:', event.type, otherNode.name);
-        // console.log('Collision Enter SelfNode:', event.type, selfNode.name);
-        // console.log('Collision Enter OtherNode:', event.type, otherNode.name);
 
         //Musuh dipukul sama Player
         if(selfNode.name==="enemy-dummy" && otherNode.name === "Player"){
@@ -62,24 +74,15 @@ export class HurtboxController extends Component {
 
     }
 
+    /* Catatan untuk audio
+        0-1 attack
+        2-5 momon dan player
+        6 boss
+    */
+
     private onTriggerEnter(event: ITriggerEvent) {
         const otherNode = event.otherCollider.node;
         const selfNode = event.selfCollider.node;
-
-        // console.log('Trigger Enter:', event.type, otherNode.name);
-        // console.log('Trigger Enter SelfNode:', event.type, selfNode.name);
-        // console.log('Trigger Enter OtherNode:', event.type, otherNode.name);
-        
-
-        // //Musuh dipukul sama Player
-        // if(selfNode.name==="enemy-dummy" && otherNode.name === "Player"){
-        //     selfNode.getComponent(EnemyController).changeMesh();
-        // }
-
-        // //Player dipukul sama Musuh
-        // if(selfNode.name==="Player" && otherNode.name === "enemy-dummy"){
-        //     selfNode.getComponent(EnemyController).changeMesh();
-        // }
 
         //Hurtbox detect di trigger oleh rb siapa
         let selfEntity:string = selfNode.name.substring(0,5);
@@ -96,11 +99,21 @@ export class HurtboxController extends Component {
             // Untuk boss
             if(selfEntity === "boss-"){
                 healthBar = this.spriteHolder.getChildByName("boss-node").getChildByName("healthBarNode").getComponent(healthBarController);
+
+                // 6
+                this.audioManager.onAudioQueue(6);
             } 
+
+            let randomNumberAudio = randomRangeInt(2,5);;
+
 
             // Untuk Player & Enemy
             if(selfEntity === "Playe"){
                 healthBar = this.spriteHolder.getChildByName("playerSprite").getChildByName("healthBarNode").getComponent(healthBarController);
+
+                // audio
+                this.audioManager.onAudioQueue(randomNumberAudio);
+
             } 
             else{
                 let i=1;
@@ -129,7 +142,10 @@ export class HurtboxController extends Component {
                             animationConnection.playAnimation("hurtBack");
                             
                         }
-                        // console.log(this.spriteHolder.getChildByName(`${spriteCounter}`));
+
+                        // audio
+                        this.audioManager.onAudioQueue(randomNumberAudio);
+                        
                         
                         break;
                     }
@@ -167,7 +183,9 @@ export class HurtboxController extends Component {
         if(selfNode.name==="Player" && otherNode.name === "tp1"){
             staticData.level+=1;
             otherNode.getParent().getParent().getChildByName("tp").getChildByName("tp1").getComponent(teleporter).toNextStage();
-            // otherNode.getComponent(Gate).makeItDisappear();
+            
+            // woosh
+            this.audioManager.queueByName("woosh");
         }
 
         

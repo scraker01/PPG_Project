@@ -1,6 +1,7 @@
-import { _decorator, CCFloat, Component, EventKeyboard, Input, input, KeyCode, lerp, Node,Animation, RigidBody, Vec3, Quat, SystemEvent, systemEvent, AnimationClip } from 'cc';
+import { _decorator, CCFloat, Component, EventKeyboard, Input, input, KeyCode, lerp, Node,Animation, RigidBody, Vec3, Quat, SystemEvent, systemEvent, AnimationClip, randomRangeInt } from 'cc';
 import { AnimationController } from './AnimationController';
 import { HitboxController } from './HitboxController';
+import { AudioManager } from '../../Etc/AudioManager';
 const { ccclass, property } = _decorator;
 
 //Import component local
@@ -35,6 +36,8 @@ export class PlayerMovementController extends Component {
     private effectRenderAnimation:Animation;
     private attackDuration:number;
     
+    //Untuk Audio
+    private audioManager:AudioManager;
     
     //Others
     private isFacingRight:boolean;
@@ -49,10 +52,7 @@ export class PlayerMovementController extends Component {
     private currentRotation: Vec3 = new Vec3(); // Player's current rotation
     private keysPressed: { [key: number]: boolean } = {}; // Track keys pressed
 
-    onLoad() {
-        
-    }
-
+    
     protected start(): void {
         input.on(Input.EventType.KEY_DOWN,this.movement,this);
         input.on(Input.EventType.KEY_UP,this.releaseMovement,this);
@@ -94,6 +94,12 @@ export class PlayerMovementController extends Component {
         // this.currentClip = this.objectAnimation.defaultClip.toString();
         this.scale = this.node.getScale();
         this.accel = 0.5;
+
+        this.audioManager = this.node.getParent().  //dari player ke world
+                                        getParent().
+                                        getChildByName("Components").
+                                        getChildByName("AudioManager").
+                                        getComponent(AudioManager);
 
     }
 
@@ -264,6 +270,10 @@ export class PlayerMovementController extends Component {
                         }
                     }
                     
+                    // mainkan audio (suara baru animasi)
+                    let randomNumberAudio = randomRangeInt(0,1);
+                    this.audioManager.onAudioQueue(randomNumberAudio);
+
                     if(this.zRotation<0){
                         this.playerAnimation.playAnimation("attack-back");
                     }else{

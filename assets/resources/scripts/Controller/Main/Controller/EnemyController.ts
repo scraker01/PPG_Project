@@ -67,9 +67,12 @@ export class EnemyController extends Component {
         
     }
     
-    // random dari 0 - 0.5 detik
+    // random dari 1.0 - 1.5 detik
+    // *tes :
+    // 1 -> 0-0.5 terlalu cepet
+    // 2 -> 0.5-1.5 masih terlalu cepet
     private generateVariableT():number{
-        return randomRangeInt(0,30);
+        return randomRangeInt(60,90);
     }
 
     public getCanAttack():boolean{

@@ -1,9 +1,10 @@
-import { _decorator, Component, lerp, Node, RigidBody, Vec3, misc, Animation} from 'cc';
+import { _decorator, Component, lerp, Node, RigidBody, Vec3, misc, Animation, randomRangeInt} from 'cc';
 const { ccclass, property } = _decorator;
 import { EnemyController } from '../Controller/EnemyController';
 import { levelStats } from '../../Etc/levelStats';
 import { AnimationController } from '../Controller/AnimationController';
 import { spriteController } from '../../Etc/spriteController';
+import { AudioManager } from '../../Etc/AudioManager';
 
 
 @ccclass('EnemyMovement')
@@ -26,7 +27,9 @@ export class EnemyMovement extends Component {
     private effectRenderAnimation:Animation;
     private attackDuration:number;
 
-
+    //Untuk Audio
+    private audioManager:AudioManager;
+    
 
     start() {
         this.player = this.node.getParent().getParent().getChildByName("Player");
@@ -52,6 +55,13 @@ export class EnemyMovement extends Component {
             });
         
         }
+
+        this.audioManager = this.node.getParent().  // dari enemy-dummy ke enemies
+                                        getParent().    // baru ke world
+                                        getParent().
+                                        getChildByName("Components").
+                                        getChildByName("AudioManager").
+                                        getComponent(AudioManager);
 
     }
     
@@ -245,6 +255,11 @@ export class EnemyMovement extends Component {
 
             //Mainkan animasi
             this.effectRenderAnimation.play("enemyAttack");
+
+            // mainkan audio
+            let randomNumberAudio = randomRangeInt(0,1);
+            this.audioManager.onAudioQueue(randomNumberAudio);
+
 
         }
     }
