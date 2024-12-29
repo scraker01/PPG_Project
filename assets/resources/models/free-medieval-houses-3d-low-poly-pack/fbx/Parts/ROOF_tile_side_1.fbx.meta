@@ -1,0 +1,147 @@
+{
+  "ver": "2.3.12",
+  "importer": "fbx",
+  "imported": true,
+  "uuid": "22bf960e-57d0-40e7-90e1-a7e16b09bc11",
+  "files": [],
+  "subMetas": {
+    "b345c": {
+      "importer": "gltf-mesh",
+      "uuid": "22bf960e-57d0-40e7-90e1-a7e16b09bc11@b345c",
+      "displayName": "",
+      "id": "b345c",
+      "name": "Mesh.461.mesh",
+      "userData": {
+        "gltfIndex": 0,
+        "triangleCount": 184
+      },
+      "ver": "1.1.1",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "48b02": {
+      "importer": "gltf-embeded-image",
+      "uuid": "22bf960e-57d0-40e7-90e1-a7e16b09bc11@48b02",
+      "displayName": "",
+      "id": "48b02",
+      "name": "base_color_texture.image",
+      "userData": {
+        "gltfIndex": 0,
+        "fixAlphaTransparencyArtifacts": true,
+        "hasAlpha": true,
+        "type": "texture"
+      },
+      "ver": "1.0.3",
+      "imported": true,
+      "files": [
+        ".json",
+        ".png"
+      ],
+      "subMetas": {}
+    },
+    "7d6ab": {
+      "importer": "texture",
+      "uuid": "22bf960e-57d0-40e7-90e1-a7e16b09bc11@7d6ab",
+      "displayName": "",
+      "id": "7d6ab",
+      "name": "base_color_texture.texture",
+      "userData": {
+        "wrapModeS": "repeat",
+        "wrapModeT": "repeat",
+        "minfilter": "linear",
+        "magfilter": "linear",
+        "mipfilter": "none",
+        "anisotropy": 0,
+        "isUuid": true,
+        "imageUuidOrDatabaseUri": "22bf960e-57d0-40e7-90e1-a7e16b09bc11@48b02"
+      },
+      "ver": "1.0.22",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "72dea": {
+      "importer": "gltf-material",
+      "uuid": "22bf960e-57d0-40e7-90e1-a7e16b09bc11@72dea",
+      "displayName": "",
+      "id": "72dea",
+      "name": "House_01_material.material",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.0.14",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "b3507": {
+      "importer": "gltf-scene",
+      "uuid": "22bf960e-57d0-40e7-90e1-a7e16b09bc11@b3507",
+      "displayName": "",
+      "id": "b3507",
+      "name": "ROOF_tile_side_1.prefab",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.0.14",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    }
+  },
+  "userData": {
+    "imageMetas": [
+      {
+        "name": "base_color_texture",
+        "uri": "22bf960e-57d0-40e7-90e1-a7e16b09bc11@48b02"
+      }
+    ],
+    "fbx": {
+      "smartMaterialEnabled": true
+    },
+    "redirect": "22bf960e-57d0-40e7-90e1-a7e16b09bc11@b3507",
+    "lods": {
+      "enable": false,
+      "hasBuiltinLOD": false,
+      "options": [
+        {
+          "screenRatio": 0.25,
+          "faceCount": 1
+        },
+        {
+          "screenRatio": 0.125,
+          "faceCount": 0.25
+        },
+        {
+          "screenRatio": 0.01,
+          "faceCount": 0.1
+        }
+      ]
+    },
+    "assetFinder": {
+      "meshes": [
+        "22bf960e-57d0-40e7-90e1-a7e16b09bc11@b345c"
+      ],
+      "skeletons": [],
+      "textures": [
+        "22bf960e-57d0-40e7-90e1-a7e16b09bc11@7d6ab"
+      ],
+      "materials": [
+        "22bf960e-57d0-40e7-90e1-a7e16b09bc11@72dea"
+      ],
+      "scenes": [
+        "22bf960e-57d0-40e7-90e1-a7e16b09bc11@b3507"
+      ]
+    }
+  }
+}

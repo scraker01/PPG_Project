@@ -1,0 +1,147 @@
+{
+  "ver": "2.3.12",
+  "importer": "fbx",
+  "imported": true,
+  "uuid": "a36a9911-5a07-489d-b41f-e8acbba069ba",
+  "files": [],
+  "subMetas": {
+    "291e3": {
+      "importer": "gltf-mesh",
+      "uuid": "a36a9911-5a07-489d-b41f-e8acbba069ba@291e3",
+      "displayName": "",
+      "id": "291e3",
+      "name": "Mesh.478.mesh",
+      "userData": {
+        "gltfIndex": 0,
+        "triangleCount": 48
+      },
+      "ver": "1.1.1",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "48b02": {
+      "importer": "gltf-embeded-image",
+      "uuid": "a36a9911-5a07-489d-b41f-e8acbba069ba@48b02",
+      "displayName": "",
+      "id": "48b02",
+      "name": "base_color_texture.image",
+      "userData": {
+        "gltfIndex": 0,
+        "fixAlphaTransparencyArtifacts": true,
+        "hasAlpha": true,
+        "type": "texture"
+      },
+      "ver": "1.0.3",
+      "imported": true,
+      "files": [
+        ".json",
+        ".png"
+      ],
+      "subMetas": {}
+    },
+    "7d6ab": {
+      "importer": "texture",
+      "uuid": "a36a9911-5a07-489d-b41f-e8acbba069ba@7d6ab",
+      "displayName": "",
+      "id": "7d6ab",
+      "name": "base_color_texture.texture",
+      "userData": {
+        "wrapModeS": "repeat",
+        "wrapModeT": "repeat",
+        "minfilter": "linear",
+        "magfilter": "linear",
+        "mipfilter": "none",
+        "anisotropy": 0,
+        "isUuid": true,
+        "imageUuidOrDatabaseUri": "a36a9911-5a07-489d-b41f-e8acbba069ba@48b02"
+      },
+      "ver": "1.0.22",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "72dea": {
+      "importer": "gltf-material",
+      "uuid": "a36a9911-5a07-489d-b41f-e8acbba069ba@72dea",
+      "displayName": "",
+      "id": "72dea",
+      "name": "House_01_material.material",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.0.14",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "451f5": {
+      "importer": "gltf-scene",
+      "uuid": "a36a9911-5a07-489d-b41f-e8acbba069ba@451f5",
+      "displayName": "",
+      "id": "451f5",
+      "name": "_ROOF_trinagle_left_wood_1.prefab",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.0.14",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    }
+  },
+  "userData": {
+    "imageMetas": [
+      {
+        "name": "base_color_texture",
+        "uri": "a36a9911-5a07-489d-b41f-e8acbba069ba@48b02"
+      }
+    ],
+    "fbx": {
+      "smartMaterialEnabled": true
+    },
+    "redirect": "a36a9911-5a07-489d-b41f-e8acbba069ba@451f5",
+    "lods": {
+      "enable": false,
+      "hasBuiltinLOD": false,
+      "options": [
+        {
+          "screenRatio": 0.25,
+          "faceCount": 1
+        },
+        {
+          "screenRatio": 0.125,
+          "faceCount": 0.25
+        },
+        {
+          "screenRatio": 0.01,
+          "faceCount": 0.1
+        }
+      ]
+    },
+    "assetFinder": {
+      "meshes": [
+        "a36a9911-5a07-489d-b41f-e8acbba069ba@291e3"
+      ],
+      "skeletons": [],
+      "textures": [
+        "a36a9911-5a07-489d-b41f-e8acbba069ba@7d6ab"
+      ],
+      "materials": [
+        "a36a9911-5a07-489d-b41f-e8acbba069ba@72dea"
+      ],
+      "scenes": [
+        "a36a9911-5a07-489d-b41f-e8acbba069ba@451f5"
+      ]
+    }
+  }
+}

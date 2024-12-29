@@ -1,0 +1,147 @@
+{
+  "ver": "2.3.12",
+  "importer": "fbx",
+  "imported": true,
+  "uuid": "c97e7c7a-d1bc-4ebd-b4bd-ec2ade7615c6",
+  "files": [],
+  "subMetas": {
+    "965d5": {
+      "importer": "gltf-mesh",
+      "uuid": "c97e7c7a-d1bc-4ebd-b4bd-ec2ade7615c6@965d5",
+      "displayName": "",
+      "id": "965d5",
+      "name": "Mesh.462.mesh",
+      "userData": {
+        "gltfIndex": 0,
+        "triangleCount": 8
+      },
+      "ver": "1.1.1",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "48b02": {
+      "importer": "gltf-embeded-image",
+      "uuid": "c97e7c7a-d1bc-4ebd-b4bd-ec2ade7615c6@48b02",
+      "displayName": "",
+      "id": "48b02",
+      "name": "base_color_texture.image",
+      "userData": {
+        "gltfIndex": 0,
+        "fixAlphaTransparencyArtifacts": true,
+        "hasAlpha": true,
+        "type": "texture"
+      },
+      "ver": "1.0.3",
+      "imported": true,
+      "files": [
+        ".json",
+        ".png"
+      ],
+      "subMetas": {}
+    },
+    "7d6ab": {
+      "importer": "texture",
+      "uuid": "c97e7c7a-d1bc-4ebd-b4bd-ec2ade7615c6@7d6ab",
+      "displayName": "",
+      "id": "7d6ab",
+      "name": "base_color_texture.texture",
+      "userData": {
+        "wrapModeS": "repeat",
+        "wrapModeT": "repeat",
+        "minfilter": "linear",
+        "magfilter": "linear",
+        "mipfilter": "none",
+        "anisotropy": 0,
+        "isUuid": true,
+        "imageUuidOrDatabaseUri": "c97e7c7a-d1bc-4ebd-b4bd-ec2ade7615c6@48b02"
+      },
+      "ver": "1.0.22",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "72dea": {
+      "importer": "gltf-material",
+      "uuid": "c97e7c7a-d1bc-4ebd-b4bd-ec2ade7615c6@72dea",
+      "displayName": "",
+      "id": "72dea",
+      "name": "House_01_material.material",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.0.14",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "b49f1": {
+      "importer": "gltf-scene",
+      "uuid": "c97e7c7a-d1bc-4ebd-b4bd-ec2ade7615c6@b49f1",
+      "displayName": "",
+      "id": "b49f1",
+      "name": "ROOF_small_triangle_up_1.prefab",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.0.14",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    }
+  },
+  "userData": {
+    "imageMetas": [
+      {
+        "name": "base_color_texture",
+        "uri": "c97e7c7a-d1bc-4ebd-b4bd-ec2ade7615c6@48b02"
+      }
+    ],
+    "fbx": {
+      "smartMaterialEnabled": true
+    },
+    "redirect": "c97e7c7a-d1bc-4ebd-b4bd-ec2ade7615c6@b49f1",
+    "lods": {
+      "enable": false,
+      "hasBuiltinLOD": false,
+      "options": [
+        {
+          "screenRatio": 0.25,
+          "faceCount": 1
+        },
+        {
+          "screenRatio": 0.125,
+          "faceCount": 0.25
+        },
+        {
+          "screenRatio": 0.01,
+          "faceCount": 0.1
+        }
+      ]
+    },
+    "assetFinder": {
+      "meshes": [
+        "c97e7c7a-d1bc-4ebd-b4bd-ec2ade7615c6@965d5"
+      ],
+      "skeletons": [],
+      "textures": [
+        "c97e7c7a-d1bc-4ebd-b4bd-ec2ade7615c6@7d6ab"
+      ],
+      "materials": [
+        "c97e7c7a-d1bc-4ebd-b4bd-ec2ade7615c6@72dea"
+      ],
+      "scenes": [
+        "c97e7c7a-d1bc-4ebd-b4bd-ec2ade7615c6@b49f1"
+      ]
+    }
+  }
+}
