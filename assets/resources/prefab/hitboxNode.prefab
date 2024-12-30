@@ -785,10 +785,7 @@
       }
     ],
     "_visFlags": 0,
-    "_spriteFrame": {
-      "__uuid__": "8fab9f48-62fe-438b-99d2-61ab85a8bdb5@f9941",
-      "__expectedType__": "cc.SpriteFrame"
-    },
+    "_spriteFrame": null,
     "_mode": 0,
     "_color": {
       "__type__": "cc.Color",
@@ -824,10 +821,6 @@
     },
     "playOnLoad": false,
     "_clips": [
-      {
-        "__uuid__": "d72a4988-863f-464f-8e3c-81c77535c06f",
-        "__expectedType__": "cc.AnimationClip"
-      },
       {
         "__uuid__": "0823085f-cb18-4a7c-ae35-ed82c1044f5e",
         "__expectedType__": "cc.AnimationClip"

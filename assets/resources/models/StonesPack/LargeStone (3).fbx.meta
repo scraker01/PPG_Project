@@ -1,0 +1,147 @@
+{
+  "ver": "2.3.12",
+  "importer": "fbx",
+  "imported": true,
+  "uuid": "5ba8de80-5bb2-4530-9929-03de1a882ec3",
+  "files": [],
+  "subMetas": {
+    "27413": {
+      "importer": "gltf-mesh",
+      "uuid": "5ba8de80-5bb2-4530-9929-03de1a882ec3@27413",
+      "displayName": "",
+      "id": "27413",
+      "name": "Landscape.010.mesh",
+      "userData": {
+        "gltfIndex": 0,
+        "triangleCount": 478
+      },
+      "ver": "1.1.1",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "48b02": {
+      "importer": "gltf-embeded-image",
+      "uuid": "5ba8de80-5bb2-4530-9929-03de1a882ec3@48b02",
+      "displayName": "",
+      "id": "48b02",
+      "name": "base_color_texture.image",
+      "userData": {
+        "gltfIndex": 0,
+        "fixAlphaTransparencyArtifacts": true,
+        "hasAlpha": false,
+        "type": "texture"
+      },
+      "ver": "1.0.3",
+      "imported": true,
+      "files": [
+        ".json",
+        ".png"
+      ],
+      "subMetas": {}
+    },
+    "7d6ab": {
+      "importer": "texture",
+      "uuid": "5ba8de80-5bb2-4530-9929-03de1a882ec3@7d6ab",
+      "displayName": "",
+      "id": "7d6ab",
+      "name": "base_color_texture.texture",
+      "userData": {
+        "wrapModeS": "repeat",
+        "wrapModeT": "repeat",
+        "minfilter": "linear",
+        "magfilter": "linear",
+        "mipfilter": "none",
+        "anisotropy": 0,
+        "isUuid": true,
+        "imageUuidOrDatabaseUri": "5ba8de80-5bb2-4530-9929-03de1a882ec3@48b02"
+      },
+      "ver": "1.0.22",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "b4e6b": {
+      "importer": "gltf-material",
+      "uuid": "5ba8de80-5bb2-4530-9929-03de1a882ec3@b4e6b",
+      "displayName": "",
+      "id": "b4e6b",
+      "name": "Material.material",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.0.14",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "d72d3": {
+      "importer": "gltf-scene",
+      "uuid": "5ba8de80-5bb2-4530-9929-03de1a882ec3@d72d3",
+      "displayName": "",
+      "id": "d72d3",
+      "name": "LargeStone (3).prefab",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.0.14",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    }
+  },
+  "userData": {
+    "imageMetas": [
+      {
+        "name": "base_color_texture",
+        "uri": "5ba8de80-5bb2-4530-9929-03de1a882ec3@48b02"
+      }
+    ],
+    "fbx": {
+      "smartMaterialEnabled": true
+    },
+    "redirect": "5ba8de80-5bb2-4530-9929-03de1a882ec3@d72d3",
+    "lods": {
+      "enable": false,
+      "hasBuiltinLOD": false,
+      "options": [
+        {
+          "screenRatio": 0.25,
+          "faceCount": 1
+        },
+        {
+          "screenRatio": 0.125,
+          "faceCount": 0.25
+        },
+        {
+          "screenRatio": 0.01,
+          "faceCount": 0.1
+        }
+      ]
+    },
+    "assetFinder": {
+      "meshes": [
+        "5ba8de80-5bb2-4530-9929-03de1a882ec3@27413"
+      ],
+      "skeletons": [],
+      "textures": [
+        "5ba8de80-5bb2-4530-9929-03de1a882ec3@7d6ab"
+      ],
+      "materials": [
+        "5ba8de80-5bb2-4530-9929-03de1a882ec3@b4e6b"
+      ],
+      "scenes": [
+        "5ba8de80-5bb2-4530-9929-03de1a882ec3@d72d3"
+      ]
+    }
+  }
+}

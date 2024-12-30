@@ -1,0 +1,97 @@
+{
+  "ver": "2.3.12",
+  "importer": "fbx",
+  "imported": true,
+  "uuid": "40aefc38-328b-4913-83bc-bc0b8d5b5cb3",
+  "files": [],
+  "subMetas": {
+    "2f6d1": {
+      "importer": "gltf-mesh",
+      "uuid": "40aefc38-328b-4913-83bc-bc0b8d5b5cb3@2f6d1",
+      "displayName": "",
+      "id": "2f6d1",
+      "name": "Cube.mesh",
+      "userData": {
+        "gltfIndex": 0,
+        "triangleCount": 108
+      },
+      "ver": "1.1.1",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "2c910": {
+      "importer": "gltf-material",
+      "uuid": "40aefc38-328b-4913-83bc-bc0b8d5b5cb3@2c910",
+      "displayName": "",
+      "id": "2c910",
+      "name": "Rock.material",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.0.14",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "475d7": {
+      "importer": "gltf-scene",
+      "uuid": "40aefc38-328b-4913-83bc-bc0b8d5b5cb3@475d7",
+      "displayName": "",
+      "id": "475d7",
+      "name": "Rock_24.prefab",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.0.14",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    }
+  },
+  "userData": {
+    "imageMetas": [],
+    "fbx": {
+      "smartMaterialEnabled": true
+    },
+    "redirect": "40aefc38-328b-4913-83bc-bc0b8d5b5cb3@475d7",
+    "lods": {
+      "enable": false,
+      "hasBuiltinLOD": false,
+      "options": [
+        {
+          "screenRatio": 0.25,
+          "faceCount": 1
+        },
+        {
+          "screenRatio": 0.125,
+          "faceCount": 0.25
+        },
+        {
+          "screenRatio": 0.01,
+          "faceCount": 0.1
+        }
+      ]
+    },
+    "assetFinder": {
+      "meshes": [
+        "40aefc38-328b-4913-83bc-bc0b8d5b5cb3@2f6d1"
+      ],
+      "skeletons": [],
+      "textures": [],
+      "materials": [
+        "40aefc38-328b-4913-83bc-bc0b8d5b5cb3@2c910"
+      ],
+      "scenes": [
+        "40aefc38-328b-4913-83bc-bc0b8d5b5cb3@475d7"
+      ]
+    }
+  }
+}

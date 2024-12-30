@@ -1,0 +1,97 @@
+{
+  "ver": "2.3.12",
+  "importer": "fbx",
+  "imported": true,
+  "uuid": "a8e6f6db-d5aa-413f-9cff-b80c42cfa5d0",
+  "files": [],
+  "subMetas": {
+    "53dde": {
+      "importer": "gltf-mesh",
+      "uuid": "a8e6f6db-d5aa-413f-9cff-b80c42cfa5d0@53dde",
+      "displayName": "",
+      "id": "53dde",
+      "name": "Cube.006.mesh",
+      "userData": {
+        "gltfIndex": 0,
+        "triangleCount": 132
+      },
+      "ver": "1.1.1",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "20b9a": {
+      "importer": "gltf-material",
+      "uuid": "a8e6f6db-d5aa-413f-9cff-b80c42cfa5d0@20b9a",
+      "displayName": "",
+      "id": "20b9a",
+      "name": "DeadOakTreeTrunk.material",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.0.14",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "22afe": {
+      "importer": "gltf-scene",
+      "uuid": "a8e6f6db-d5aa-413f-9cff-b80c42cfa5d0@22afe",
+      "displayName": "",
+      "id": "22afe",
+      "name": "DeadOak1.prefab",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.0.14",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    }
+  },
+  "userData": {
+    "imageMetas": [],
+    "fbx": {
+      "smartMaterialEnabled": true
+    },
+    "redirect": "a8e6f6db-d5aa-413f-9cff-b80c42cfa5d0@22afe",
+    "lods": {
+      "enable": false,
+      "hasBuiltinLOD": false,
+      "options": [
+        {
+          "screenRatio": 0.25,
+          "faceCount": 1
+        },
+        {
+          "screenRatio": 0.125,
+          "faceCount": 0.25
+        },
+        {
+          "screenRatio": 0.01,
+          "faceCount": 0.1
+        }
+      ]
+    },
+    "assetFinder": {
+      "meshes": [
+        "a8e6f6db-d5aa-413f-9cff-b80c42cfa5d0@53dde"
+      ],
+      "skeletons": [],
+      "textures": [],
+      "materials": [
+        "a8e6f6db-d5aa-413f-9cff-b80c42cfa5d0@20b9a"
+      ],
+      "scenes": [
+        "a8e6f6db-d5aa-413f-9cff-b80c42cfa5d0@22afe"
+      ]
+    }
+  }
+}

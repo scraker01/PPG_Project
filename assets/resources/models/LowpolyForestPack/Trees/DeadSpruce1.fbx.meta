@@ -1,0 +1,97 @@
+{
+  "ver": "2.3.12",
+  "importer": "fbx",
+  "imported": true,
+  "uuid": "0ae408a8-5891-4b51-9b26-53e5d69ba0d4",
+  "files": [],
+  "subMetas": {
+    "faad7": {
+      "importer": "gltf-mesh",
+      "uuid": "0ae408a8-5891-4b51-9b26-53e5d69ba0d4@faad7",
+      "displayName": "",
+      "id": "faad7",
+      "name": "Cylinder.003.mesh",
+      "userData": {
+        "gltfIndex": 0,
+        "triangleCount": 526
+      },
+      "ver": "1.1.1",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "dcbe2": {
+      "importer": "gltf-material",
+      "uuid": "0ae408a8-5891-4b51-9b26-53e5d69ba0d4@dcbe2",
+      "displayName": "",
+      "id": "dcbe2",
+      "name": "DeadSpruceTreeTrunk.material",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.0.14",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "2ddef": {
+      "importer": "gltf-scene",
+      "uuid": "0ae408a8-5891-4b51-9b26-53e5d69ba0d4@2ddef",
+      "displayName": "",
+      "id": "2ddef",
+      "name": "DeadSpruce1.prefab",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.0.14",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    }
+  },
+  "userData": {
+    "imageMetas": [],
+    "fbx": {
+      "smartMaterialEnabled": true
+    },
+    "redirect": "0ae408a8-5891-4b51-9b26-53e5d69ba0d4@2ddef",
+    "lods": {
+      "enable": false,
+      "hasBuiltinLOD": false,
+      "options": [
+        {
+          "screenRatio": 0.25,
+          "faceCount": 1
+        },
+        {
+          "screenRatio": 0.125,
+          "faceCount": 0.25
+        },
+        {
+          "screenRatio": 0.01,
+          "faceCount": 0.1
+        }
+      ]
+    },
+    "assetFinder": {
+      "meshes": [
+        "0ae408a8-5891-4b51-9b26-53e5d69ba0d4@faad7"
+      ],
+      "skeletons": [],
+      "textures": [],
+      "materials": [
+        "0ae408a8-5891-4b51-9b26-53e5d69ba0d4@dcbe2"
+      ],
+      "scenes": [
+        "0ae408a8-5891-4b51-9b26-53e5d69ba0d4@2ddef"
+      ]
+    }
+  }
+}

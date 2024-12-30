@@ -1,0 +1,97 @@
+{
+  "ver": "2.3.12",
+  "importer": "fbx",
+  "imported": true,
+  "uuid": "8d49741c-3e85-415c-93e2-6d927fd319e4",
+  "files": [],
+  "subMetas": {
+    "bbd92": {
+      "importer": "gltf-mesh",
+      "uuid": "8d49741c-3e85-415c-93e2-6d927fd319e4@bbd92",
+      "displayName": "",
+      "id": "bbd92",
+      "name": "Cylinder.004.mesh",
+      "userData": {
+        "gltfIndex": 0,
+        "triangleCount": 446
+      },
+      "ver": "1.1.1",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "dcbe2": {
+      "importer": "gltf-material",
+      "uuid": "8d49741c-3e85-415c-93e2-6d927fd319e4@dcbe2",
+      "displayName": "",
+      "id": "dcbe2",
+      "name": "DeadSpruceTreeTrunk.material",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.0.14",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "9ed63": {
+      "importer": "gltf-scene",
+      "uuid": "8d49741c-3e85-415c-93e2-6d927fd319e4@9ed63",
+      "displayName": "",
+      "id": "9ed63",
+      "name": "DeadSpruce3.prefab",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.0.14",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    }
+  },
+  "userData": {
+    "imageMetas": [],
+    "fbx": {
+      "smartMaterialEnabled": true
+    },
+    "redirect": "8d49741c-3e85-415c-93e2-6d927fd319e4@9ed63",
+    "lods": {
+      "enable": false,
+      "hasBuiltinLOD": false,
+      "options": [
+        {
+          "screenRatio": 0.25,
+          "faceCount": 1
+        },
+        {
+          "screenRatio": 0.125,
+          "faceCount": 0.25
+        },
+        {
+          "screenRatio": 0.01,
+          "faceCount": 0.1
+        }
+      ]
+    },
+    "assetFinder": {
+      "meshes": [
+        "8d49741c-3e85-415c-93e2-6d927fd319e4@bbd92"
+      ],
+      "skeletons": [],
+      "textures": [],
+      "materials": [
+        "8d49741c-3e85-415c-93e2-6d927fd319e4@dcbe2"
+      ],
+      "scenes": [
+        "8d49741c-3e85-415c-93e2-6d927fd319e4@9ed63"
+      ]
+    }
+  }
+}
