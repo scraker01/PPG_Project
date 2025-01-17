@@ -3,18 +3,31 @@ import { levelController } from './levelController';
 import { staticData } from './staticData';
 import { statusController } from '../Main/Controller/statusController';
 import { sceneController } from './sceneController';
+import { AudioManager } from './AudioManager';
 const { ccclass, property } = _decorator;
 
 @ccclass('saveAndLoad')
 export class saveAndLoad extends Component {
     @property({type:Node}) private player:Node|null;
+    
+
     private level;
     
     private isActive:boolean;
     
     protected start(): void {
         this.isActive=false;
-        
+        // this.source = this.source.node.
+        // getParent().
+        // getParent().
+        // getParent(). //Menu canvas
+        // getParent(). //stage title
+        // getChildByName("Components").
+        // getChildByName("AudioManager").
+        // getComponent(AudioManager);
+
+ 
+
     }
 
     
@@ -45,12 +58,14 @@ export class saveAndLoad extends Component {
     // }
 
     private quit(){
+
         staticData.reset();
         director.resume();
         sceneController.loadScene("intro");
     }
 
     private save(){
+
         this.level = staticData.level;
         let health = this.player.getComponent(statusController).getHealth();
 

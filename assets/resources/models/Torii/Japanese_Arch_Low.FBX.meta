@@ -1,0 +1,171 @@
+{
+  "ver": "2.3.12",
+  "importer": "fbx",
+  "imported": true,
+  "uuid": "a5fc080d-ab42-42ff-8d27-e1fda493e825",
+  "files": [],
+  "subMetas": {
+    "d87f6": {
+      "importer": "gltf-mesh",
+      "uuid": "a5fc080d-ab42-42ff-8d27-e1fda493e825@d87f6",
+      "displayName": "",
+      "id": "d87f6",
+      "name": "Columna_1.mesh",
+      "userData": {
+        "gltfIndex": 0,
+        "triangleCount": 768
+      },
+      "ver": "1.1.1",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "f8c0d": {
+      "importer": "gltf-mesh",
+      "uuid": "a5fc080d-ab42-42ff-8d27-e1fda493e825@f8c0d",
+      "displayName": "",
+      "id": "f8c0d",
+      "name": "Columna_2.mesh",
+      "userData": {
+        "gltfIndex": 1,
+        "triangleCount": 768
+      },
+      "ver": "1.1.1",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "489bf": {
+      "importer": "gltf-mesh",
+      "uuid": "a5fc080d-ab42-42ff-8d27-e1fda493e825@489bf",
+      "displayName": "",
+      "id": "489bf",
+      "name": "Forma.mesh",
+      "userData": {
+        "gltfIndex": 2,
+        "triangleCount": 156
+      },
+      "ver": "1.1.1",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "f0347": {
+      "importer": "gltf-mesh",
+      "uuid": "a5fc080d-ab42-42ff-8d27-e1fda493e825@f0347",
+      "displayName": "",
+      "id": "f0347",
+      "name": "Techo.mesh",
+      "userData": {
+        "gltfIndex": 3,
+        "triangleCount": 188
+      },
+      "ver": "1.1.1",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "4349a": {
+      "importer": "gltf-material",
+      "uuid": "a5fc080d-ab42-42ff-8d27-e1fda493e825@4349a",
+      "displayName": "",
+      "id": "4349a",
+      "name": "Rojo.material",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.0.14",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "30e27": {
+      "importer": "gltf-material",
+      "uuid": "a5fc080d-ab42-42ff-8d27-e1fda493e825@30e27",
+      "displayName": "",
+      "id": "30e27",
+      "name": "Amarillo.material",
+      "userData": {
+        "gltfIndex": 1
+      },
+      "ver": "1.0.14",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "bc57f": {
+      "importer": "gltf-scene",
+      "uuid": "a5fc080d-ab42-42ff-8d27-e1fda493e825@bc57f",
+      "displayName": "",
+      "id": "bc57f",
+      "name": "Japanese_Arch_Low.prefab",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.0.14",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    }
+  },
+  "userData": {
+    "imageMetas": [],
+    "fbx": {
+      "smartMaterialEnabled": true
+    },
+    "redirect": "a5fc080d-ab42-42ff-8d27-e1fda493e825@bc57f",
+    "lods": {
+      "enable": false,
+      "hasBuiltinLOD": false,
+      "options": [
+        {
+          "screenRatio": 0.25,
+          "faceCount": 1
+        },
+        {
+          "screenRatio": 0.125,
+          "faceCount": 0.25
+        },
+        {
+          "screenRatio": 0.01,
+          "faceCount": 0.1
+        }
+      ]
+    },
+    "assetFinder": {
+      "meshes": [
+        "a5fc080d-ab42-42ff-8d27-e1fda493e825@d87f6",
+        "a5fc080d-ab42-42ff-8d27-e1fda493e825@f8c0d",
+        "a5fc080d-ab42-42ff-8d27-e1fda493e825@489bf",
+        "a5fc080d-ab42-42ff-8d27-e1fda493e825@f0347"
+      ],
+      "skeletons": [],
+      "textures": [],
+      "materials": [
+        "a5fc080d-ab42-42ff-8d27-e1fda493e825@4349a",
+        "a5fc080d-ab42-42ff-8d27-e1fda493e825@30e27"
+      ],
+      "scenes": [
+        "a5fc080d-ab42-42ff-8d27-e1fda493e825@bc57f"
+      ]
+    }
+  }
+}
